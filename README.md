@@ -1,6 +1,10 @@
 🌳 CC0Tree — Free Low‑Poly Assets for Indie Devs
 🌐 Browse the library on the [CC0Tree website](https://skywolfgamestudios.github.io/CC0Tree/)
 
+[![Support on Patreon](https://img.shields.io/badge/Patreon-support-f96854?logo=patreon&logoColor=white)](https://patreon.com/skywolfgamestudios)
+[![Sponsor on GitHub](https://img.shields.io/badge/GitHub%20Sponsors-sponsor-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/SkywolfGameStudios)
+[![License: CC0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](LICENSE)
+
 CC0Tree is an ever‑growing collection of completely free, CC0‑licensed game assets created for indie developers, students, hobbyists, and anyone building games.
 All assets in this repository are public domain — no attribution required, no restrictions, and free for commercial and personal use.
 
