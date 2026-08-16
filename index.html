@@ -50,6 +50,7 @@
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
+  html, body{overflow-x:hidden; max-width:100%;}
   a{color:inherit;}
   img{max-width:100%;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
@@ -68,6 +69,7 @@
   }
   .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem; text-decoration:none; white-space:nowrap;}
   .brand .logo{font-size:1.4rem;}
+  .nav-right{display:flex; align-items:center; gap:16px;}
   .nav-links{display:flex; align-items:center; gap:22px; font-size:0.92rem;}
   .nav-links a{text-decoration:none; color:var(--text-dim); transition:color .15s;}
   .nav-links a:hover{color:var(--accent-bright);}
@@ -79,6 +81,25 @@
     white-space:nowrap;
   }
   .nav-cta:hover{background:var(--gold-bright); transform:translateY(-1px);}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; align-items:center; gap:4px;
+    width:36px; height:36px; flex:0 0 auto;
+    background:transparent; border:1px solid var(--border); border-radius:8px; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{display:block; width:16px; height:2px; background:var(--text); border-radius:2px;}
+
+  @media (max-width: 780px){
+    .nav-toggle{display:flex; order:1;}
+    .nav-cta{order:2;}
+    .nav-links{
+      display:none; order:3;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--bg-alt); border-bottom:1px solid var(--border);
+      flex-direction:column; align-items:stretch; gap:0; padding:4px 24px 12px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:13px 2px; border-bottom:1px solid var(--border);}
+  }
 
   /* HERO */
   .hero{padding:76px 0 56px; text-align:center;}
@@ -153,6 +174,26 @@
     background:rgba(87,199,133,0.08); border-radius:12px; overflow:hidden;
   }
   .card .icon img{width:100%; height:100%; object-fit:contain; border-radius:10px;}
+  .card .icon img.zoomable{cursor:zoom-in; transition:transform .15s;}
+  .card .icon img.zoomable:hover{transform:scale(1.06);}
+
+  /* ICON LIGHTBOX */
+  .img-lightbox{
+    position:fixed; inset:0; z-index:200; background:rgba(6,10,8,0.92);
+    display:none; align-items:center; justify-content:center; flex-direction:column; gap:16px;
+    padding:24px; cursor:zoom-out;
+  }
+  .img-lightbox.open{display:flex;}
+  .img-lightbox img{
+    max-width:min(560px, 90vw); max-height:70vh; object-fit:contain;
+    background:#000; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  }
+  .img-lightbox .lb-caption{color:var(--text); font-weight:700; font-size:1.05rem;}
+  .img-lightbox .lb-close{
+    position:absolute; top:20px; right:24px; background:var(--card); border:1px solid var(--border);
+    color:var(--text); width:40px; height:40px; border-radius:50%; font-size:1.3rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
   .card h3{margin:0; font-size:1.05rem; font-weight:700;}
   .card .meta{display:flex; flex-wrap:wrap; gap:6px; font-size:0.72rem;}
   .tag{
@@ -271,15 +312,20 @@
 <header class="nav">
   <div class="nav-inner">
     <a href="#top" class="brand"><span class="logo">🌳</span> CC0Tree</a>
-    <nav class="nav-links">
-      <a href="#library">Library</a>
-      <a href="#schedule">Updates</a>
-      <a href="#support">Support</a>
-      <a href="#license">License</a>
-      <a href="https://github.com/SkywolfGameStudios/CC0Tree">GitHub</a>
-      <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener">Studio</a>
-    </nav>
-    <a class="nav-cta" href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">💛 Sponsor</a>
+    <div class="nav-right">
+      <nav class="nav-links" id="nav-links">
+        <a href="#library">Library</a>
+        <a href="#schedule">Updates</a>
+        <a href="#support">Support</a>
+        <a href="#license">License</a>
+        <a href="https://github.com/SkywolfGameStudios/CC0Tree">GitHub</a>
+        <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener">Studio</a>
+      </nav>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-cta" href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">💛 Sponsor</a>
+    </div>
   </div>
 </header>
 
@@ -425,6 +471,12 @@
     <div class="copyright">CC0Tree is a project by <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener" style="color:var(--accent-bright); text-decoration:none;">Skywolf Game Studios</a> · All assets released under CC0 (public domain)</div>
   </div>
 </footer>
+
+<div class="img-lightbox" id="img-lightbox">
+  <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
 
 <div class="support-toast" id="support-toast" role="status" aria-live="polite">
   <span class="t-icon">🌱</span>
@@ -582,7 +634,7 @@
           <div class="card${i.isNew ? ' is-new' : ''}">
             ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
             <div class="icon">${i.thumb
-              ? `<img src="${i.thumb}" alt="" onerror="this.parentElement.textContent='${i.icon}';">`
+              ? `<img src="${i.thumb}" alt="" class="zoomable" data-name="${i.name.replace(/"/g,'&quot;')}" onerror="this.parentElement.textContent='${i.icon}';">`
               : i.icon}</div>
             <h3>${i.name}</h3>
             <div class="meta">
@@ -629,6 +681,48 @@
       ]).then(([iconFiles, newFiles]) => render(assetFiles, iconFiles, newFiles))
     )
     .catch(() => render(FALLBACK_FILES, [], []));
+})();
+
+// Icon lightbox — click a card's render to see it larger
+(function(){
+  const lb = document.getElementById("img-lightbox");
+  const lbImg = document.getElementById("lb-img");
+  const lbCaption = document.getElementById("lb-caption");
+
+  function open(src, name){
+    lbImg.src = src;
+    lbCaption.textContent = name || "";
+    lb.classList.add("open");
+  }
+  function close(){
+    lb.classList.remove("open");
+    lbImg.src = "";
+  }
+
+  document.body.addEventListener("click", (e) => {
+    const img = e.target.closest(".icon img.zoomable");
+    if (img){ open(img.src, img.dataset.name); return; }
+    if (e.target.closest("#lb-close") || e.target === lb){ close(); }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
+})();
+
+// Mobile nav toggle
+(function(){
+  const toggle = document.getElementById("nav-toggle");
+  const links = document.getElementById("nav-links");
+  toggle.addEventListener("click", () => {
+    const isOpen = links.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", isOpen);
+  });
+  links.addEventListener("click", (e) => {
+    if (e.target.closest("a")){
+      links.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
 })();
 
 // Post-download support nudge — fires once per session, on the first asset download click.
