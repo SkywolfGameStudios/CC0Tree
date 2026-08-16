@@ -128,16 +128,26 @@
   }
   .filter-btn:hover{border-color:var(--accent); color:var(--text);}
   .filter-btn.active{background:var(--accent); border-color:var(--accent); color:#062012;}
+  .filter-btn.new-btn{border-color:rgba(242,181,68,0.4); color:var(--gold-bright);}
+  .filter-btn.new-btn:hover{border-color:var(--gold);}
+  .filter-btn.new-btn.active{background:var(--gold); border-color:var(--gold); color:#241b06;}
 
   /* GRID */
   .grid{
     display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:18px;
   }
   .card{
+    position:relative;
     background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
     padding:22px; display:flex; flex-direction:column; gap:12px; transition:all .18s;
   }
   .card:hover{background:var(--card-hover); border-color:var(--accent); transform:translateY(-3px);}
+  .card.is-new{border-color:rgba(242,181,68,0.4);}
+  .new-badge{
+    position:absolute; top:-10px; right:16px; background:var(--gold); color:#241b06;
+    font-size:0.72rem; font-weight:800; letter-spacing:0.02em; padding:4px 10px; border-radius:999px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.35);
+  }
   .card .icon{
     font-size:2.4rem; width:72px; height:72px; display:flex; align-items:center; justify-content:center;
     background:rgba(87,199,133,0.08); border-radius:12px; overflow:hidden;
@@ -436,6 +446,10 @@
   const ASSETS_API_URL = `https://api.github.com/repos/${REPO}/contents/Assets?ref=${BRANCH}`;
   const ICONS_API_URL = `https://api.github.com/repos/${REPO}/contents/Icons?ref=${BRANCH}`;
 
+  // Bump this to the filename of the latest weekly asset to flag it "New" — the only
+  // manual step in an otherwise self-updating page.
+  const FEATURED_FILENAME = "SM_WateringCan.fbx";
+
   // Fallback data in case the GitHub API is unreachable or rate-limited.
   const FALLBACK_FILES = [
     "SM_Airplane.fbx","SM_BaseballBat.fbx","SM_Bowling_Ball.fbx","SM_Bowling_Pin.fbx",
@@ -528,6 +542,7 @@
           cat: meta.cat,
           icon: meta.icon,
           thumb: null,
+          isNew: f.name === FEATURED_FILENAME,
           download: f.download_url,
           view: f.html_url
         };
@@ -543,16 +558,20 @@
 
     statCount.textContent = items.length + (items.length === FALLBACK_FILES.length ? "+" : "");
 
+    const hasNew = items.some(i => i.isNew);
     const cats = ["All", ...Array.from(new Set(items.map(i => i.cat))).sort()];
-    filtersEl.innerHTML = cats.map((c,i) =>
-      `<button class="filter-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`
-    ).join("");
+    filtersEl.innerHTML =
+      (hasNew ? `<button class="filter-btn new-btn" data-cat="✨ New">✨ New</button>` : "") +
+      cats.map((c,i) =>
+        `<button class="filter-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`
+      ).join("");
 
     function draw(filter){
       grid.innerHTML = items
-        .filter(i => filter === "All" || i.cat === filter)
+        .filter(i => filter === "All" || i.cat === filter || (filter === "✨ New" && i.isNew))
         .map(i => `
-          <div class="card">
+          <div class="card${i.isNew ? ' is-new' : ''}">
+            ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
             <div class="icon">${i.thumb
               ? `<img src="${i.thumb}" alt="" onerror="this.parentElement.textContent='${i.icon}';">`
               : i.icon}</div>
