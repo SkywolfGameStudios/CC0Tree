@@ -12,6 +12,7 @@ All assets in this repository are public domain — no attribution required, no 
 
 This GitHub repo exists so you can download the entire library at once, clone it, fork it, or integrate it directly into your workflow.
 
+
 ✨ What’s Inside
 Low‑poly 3D models
 
@@ -24,6 +25,7 @@ Game‑ready, lightweight assets optimized for performance
 New additions added regularly as the CC0Tree “forest” grows
 
 Most assets are designed to be lightweight and easy to use, typically staying within a low‑poly range suitable for mobile and indie projects. Some assets may become more detailed over time as the library expands, but the overall style will remain clean, stylized, and performance‑friendly.
+
 
 📁 File Formats
 To keep CC0Tree fully accessible:
@@ -39,11 +41,13 @@ Patreon supporters can download the full source files here:
 
 This setup keeps the CC0 assets truly free while giving supporters something extra for helping the project grow.
 
+
 📅 Update Schedule
 CC0Tree grows a little more every week.
 I release at least one new asset every week, and some weeks you may see two or more, depending on workload and inspiration.
 
 The goal is steady, reliable growth — a forest that expands over time with fresh, free assets for indie devs.
+
 
 📜 License
 All assets in this repository are released under the Creative Commons Zero (CC0) License.
@@ -59,6 +63,7 @@ Include them in your own asset packs
 Use them without credit (though credit is always appreciated)
 
 There are no limitations and no attribution required.
+
 
 📦 How to Use
 You can access CC0Tree in several ways:
@@ -78,11 +83,13 @@ Assets are also viewable individually on itch.io:
 Contributions are welcome!
 If you’d like to add your own CC0 assets to the project, feel free to open a pull request.
 
+
 🌱 Project Goal
 CC0Tree exists to help indie devs build faster, prototype more freely, and finish more games — without worrying about licensing, paywalls, or asset restrictions.
 
 The mission is simple:
 Grow a massive, community‑friendly forest of free game assets.
+
 
 🔗 Follow & Support
 Stay updated on new asset drops, dev logs, and project growth:
