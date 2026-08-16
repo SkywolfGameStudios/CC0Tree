@@ -22,6 +22,7 @@ This GitHub repo exists so you can download the entire library at once, clone it
 Most assets are designed to be lightweight and easy to use, typically staying within a low‑poly range suitable for mobile and indie projects. Some assets may become more detailed over time as the library expands, but the overall style will remain clean, stylized, and performance‑friendly.
 
 ## 📁 File Formats
+
 To keep CC0Tree fully accessible:
 
 - **FBX files** are included here in the public CC0 release. These are game‑ready and free for anyone to use.
@@ -47,6 +48,7 @@ All assets in this repository are released under the Creative Commons Zero (CC0)
 There are no limitations and no attribution required.
 
 ## 📦 How to Use
+
 You can access CC0Tree in several ways:
 
 1. **Browse & Download Individually (Recommended)** — Browse the whole library as a visual grid, filter by category, and grab exactly what you need on the [CC0Tree website](https://skywolfgamestudios.github.io/CC0Tree/).
@@ -56,13 +58,6 @@ You can access CC0Tree in several ways:
 
 ## 🌱 Project Goal
 
-3. Browse on itch.io
-Assets are also viewable individually on itch.io:
-👉 https://skywolfgamestudios.itch.io/cc0tree
-
-4. Contribute
-Contributions are welcome!
-If you’d like to add your own CC0 assets to the project, feel free to open a pull request.
 CC0Tree exists to help indie devs build faster, prototype more freely, and finish more games — without worrying about licensing, paywalls, or asset restrictions.
 
 The mission is simple: grow a massive, community‑friendly forest of free game assets.
