@@ -445,10 +445,7 @@
   const BRANCH = "main";
   const ASSETS_API_URL = `https://api.github.com/repos/${REPO}/contents/Assets?ref=${BRANCH}`;
   const ICONS_API_URL = `https://api.github.com/repos/${REPO}/contents/Icons?ref=${BRANCH}`;
-
-  // Bump this to the filename of the latest weekly asset to flag it "New" — the only
-  // manual step in an otherwise self-updating page.
-  const FEATURED_FILENAME = "SM_WateringCan.fbx";
+  const NEW_API_URL = `https://api.github.com/repos/${REPO}/contents/New?ref=${BRANCH}`;
 
   // Fallback data in case the GitHub API is unreachable or rate-limited.
   const FALLBACK_FILES = [
@@ -516,6 +513,17 @@
     }
   }
 
+  // Flags an item as "New" if a file with a shared name token exists in the New/ folder —
+  // drop the exact same file in there (or anything sharing a word) to feature it, remove
+  // it to un-feature it. Same matching approach as Icons/, purely manual/opt-in.
+  function matchNew(assetItems, newFiles){
+    const markers = newFiles.map(f => tokenize(f.name));
+    for (const item of assetItems){
+      const assetTokens = tokenize(item.filename);
+      item.isNew = markers.some(tokens => tokens.some(t => assetTokens.includes(t)));
+    }
+  }
+
   function formatBytes(bytes){
     if (!bytes && bytes !== 0) return "";
     if (bytes < 1024) return bytes + " B";
@@ -524,7 +532,7 @@
     return (kb / 1024).toFixed(1) + " MB";
   }
 
-  function render(files, iconFiles){
+  function render(files, iconFiles, newFiles){
     const grid = document.getElementById("grid");
     const loadState = document.getElementById("load-state");
     const filtersEl = document.getElementById("filters");
@@ -542,7 +550,7 @@
           cat: meta.cat,
           icon: meta.icon,
           thumb: null,
-          isNew: f.name === FEATURED_FILENAME,
+          isNew: false,
           download: f.download_url,
           view: f.html_url
         };
@@ -550,6 +558,7 @@
       .sort((a,b) => a.name.localeCompare(b.name));
 
     if (iconFiles && iconFiles.length) matchIcons(items, iconFiles);
+    if (newFiles && newFiles.length) matchNew(items, newFiles);
 
     if (items.length === 0){
       loadState.textContent = "No assets found yet — check back soon 🌱";
@@ -614,11 +623,12 @@
 
   fetchJson(ASSETS_API_URL)
     .then(assetFiles =>
-      fetchJson(ICONS_API_URL)
-        .catch(() => []) // Icons/ folder is optional — missing or empty is fine
-        .then(iconFiles => render(assetFiles, iconFiles))
+      Promise.all([
+        fetchJson(ICONS_API_URL).catch(() => []), // Icons/ folder is optional — missing or empty is fine
+        fetchJson(NEW_API_URL).catch(() => [])    // New/ folder is optional too
+      ]).then(([iconFiles, newFiles]) => render(assetFiles, iconFiles, newFiles))
     )
-    .catch(() => render(FALLBACK_FILES, []));
+    .catch(() => render(FALLBACK_FILES, [], []));
 })();
 
 // Post-download support nudge — fires once per session, on the first asset download click.
