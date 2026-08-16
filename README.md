@@ -1,5 +1,7 @@
 🌳 CC0Tree — Free Low‑Poly Assets for Indie Devs
-🌐 Browse the library on the [CC0Tree website](https://skywolfgamestudios.github.io/CC0Tree/)
+
+### 🌐 [Browse the full library on the CC0Tree website →](https://skywolfgamestudios.github.io/CC0Tree/)
+The easiest way in: a visual grid of every asset, filterable by category, with a "New" tag on the latest weekly drop. This repo is best for cloning the whole thing at once — see below.
 
 [![Support on Patreon](https://img.shields.io/badge/Patreon-support-f96854?logo=patreon&logoColor=white)](https://patreon.com/skywolfgamestudios)
 [![Sponsor on GitHub](https://img.shields.io/badge/GitHub%20Sponsors-sponsor-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/SkywolfGameStudios)
@@ -61,14 +63,18 @@ There are no limitations and no attribution required.
 📦 How to Use
 You can access CC0Tree in several ways:
 
-1. Download Everything (Recommended)
-Clone or download this repository to get the full asset library in one place.
+1. Browse & Download Individually (Recommended)
+Browse the whole library as a visual grid, filter by category, and grab exactly what you need:
+👉 https://skywolfgamestudios.github.io/CC0Tree/
 
-2. Browse Individual Assets
-You can also view and download assets individually on itch.io:
+2. Download Everything at Once
+Clone or download this repository to get the full asset library in one place — ideal if you want it all.
+
+3. Browse on itch.io
+Assets are also viewable individually on itch.io:
 👉 https://skywolfgamestudios.itch.io/cc0tree
 
-3. Contribute
+4. Contribute
 Contributions are welcome!
 If you’d like to add your own CC0 assets to the project, feel free to open a pull request.
 
