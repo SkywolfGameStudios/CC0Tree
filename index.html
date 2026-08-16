@@ -540,7 +540,7 @@
         .map(i => `
           <div class="card">
             <div class="icon">${i.thumb
-              ? `<img src="${i.thumb}" alt="" loading="lazy" onerror="this.parentElement.textContent='${i.icon}';">`
+              ? `<img src="${i.thumb}" alt="" onerror="this.parentElement.textContent='${i.icon}';">`
               : i.icon}</div>
             <h3>${i.name}</h3>
             <div class="meta">
