@@ -34,6 +34,8 @@
     --accent-bright:#7fe3a8;
     --gold:#f2b544;
     --gold-bright:#ffcc66;
+    --info:#5b9dd9;
+    --info-bright:#7ec4f2;
     --radius:14px;
     --maxw:1180px;
   }
@@ -152,6 +154,9 @@
   .filter-btn.new-btn{border-color:rgba(242,181,68,0.4); color:var(--gold-bright);}
   .filter-btn.new-btn:hover{border-color:var(--gold);}
   .filter-btn.new-btn.active{background:var(--gold); border-color:var(--gold); color:#241b06;}
+  .filter-btn.updated-btn{border-color:rgba(91,157,217,0.4); color:var(--info-bright);}
+  .filter-btn.updated-btn:hover{border-color:var(--info);}
+  .filter-btn.updated-btn.active{background:var(--info); border-color:var(--info); color:#0a1c2b;}
 
   /* GRID */
   .grid{
@@ -164,8 +169,14 @@
   }
   .card:hover{background:var(--card-hover); border-color:var(--accent); transform:translateY(-3px);}
   .card.is-new{border-color:rgba(242,181,68,0.4);}
+  .card.is-updated{border-color:rgba(91,157,217,0.4);}
   .new-badge{
     position:absolute; top:-10px; right:16px; background:var(--gold); color:#241b06;
+    font-size:0.72rem; font-weight:800; letter-spacing:0.02em; padding:4px 10px; border-radius:999px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.35);
+  }
+  .updated-badge{
+    position:absolute; top:-10px; left:16px; background:var(--info); color:#0a1c2b;
     font-size:0.72rem; font-weight:800; letter-spacing:0.02em; padding:4px 10px; border-radius:999px;
     box-shadow:0 2px 8px rgba(0,0,0,0.35);
   }
@@ -498,6 +509,7 @@
   const ASSETS_API_URL = `https://api.github.com/repos/${REPO}/contents/Assets?ref=${BRANCH}`;
   const ICONS_API_URL = `https://api.github.com/repos/${REPO}/contents/Icons?ref=${BRANCH}`;
   const NEW_API_URL = `https://api.github.com/repos/${REPO}/contents/New?ref=${BRANCH}`;
+  const UPDATED_API_URL = `https://api.github.com/repos/${REPO}/contents/Updated?ref=${BRANCH}`;
 
   // Fallback data in case the GitHub API is unreachable or rate-limited.
   const FALLBACK_FILES = [
@@ -576,6 +588,16 @@
     }
   }
 
+  // Same idea as matchNew, but for existing assets that were updated/re-exported/migrated
+  // in rather than brand-new work — keeps the two tags from meaning the same thing.
+  function matchUpdated(assetItems, updatedFiles){
+    const markers = updatedFiles.map(f => tokenize(f.name));
+    for (const item of assetItems){
+      const assetTokens = tokenize(item.filename);
+      item.isUpdated = markers.some(tokens => tokens.some(t => assetTokens.includes(t)));
+    }
+  }
+
   function formatBytes(bytes){
     if (!bytes && bytes !== 0) return "";
     if (bytes < 1024) return bytes + " B";
@@ -584,7 +606,7 @@
     return (kb / 1024).toFixed(1) + " MB";
   }
 
-  function render(files, iconFiles, newFiles){
+  function render(files, iconFiles, newFiles, updatedFiles){
     const grid = document.getElementById("grid");
     const loadState = document.getElementById("load-state");
     const filtersEl = document.getElementById("filters");
@@ -603,6 +625,7 @@
           icon: meta.icon,
           thumb: null,
           isNew: false,
+          isUpdated: false,
           download: f.download_url,
           view: f.html_url
         };
@@ -611,6 +634,7 @@
 
     if (iconFiles && iconFiles.length) matchIcons(items, iconFiles);
     if (newFiles && newFiles.length) matchNew(items, newFiles);
+    if (updatedFiles && updatedFiles.length) matchUpdated(items, updatedFiles);
 
     if (items.length === 0){
       loadState.textContent = "No assets found yet — check back soon 🌱";
@@ -620,19 +644,24 @@
     statCount.textContent = items.length + (items.length === FALLBACK_FILES.length ? "+" : "");
 
     const hasNew = items.some(i => i.isNew);
+    const hasUpdated = items.some(i => i.isUpdated);
     const cats = ["All", ...Array.from(new Set(items.map(i => i.cat))).sort()];
     filtersEl.innerHTML =
       (hasNew ? `<button class="filter-btn new-btn" data-cat="✨ New">✨ New</button>` : "") +
+      (hasUpdated ? `<button class="filter-btn updated-btn" data-cat="🔄 Updated">🔄 Updated</button>` : "") +
       cats.map((c,i) =>
         `<button class="filter-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`
       ).join("");
 
     function draw(filter){
       grid.innerHTML = items
-        .filter(i => filter === "All" || i.cat === filter || (filter === "✨ New" && i.isNew))
+        .filter(i => filter === "All" || i.cat === filter
+          || (filter === "✨ New" && i.isNew)
+          || (filter === "🔄 Updated" && i.isUpdated))
         .map(i => `
-          <div class="card${i.isNew ? ' is-new' : ''}">
+          <div class="card${i.isNew ? ' is-new' : ''}${i.isUpdated ? ' is-updated' : ''}">
             ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
+            ${i.isUpdated ? '<span class="updated-badge">🔄 UPDATED</span>' : ''}
             <div class="icon">${i.thumb
               ? `<img src="${i.thumb}" alt="" class="zoomable" data-name="${i.name.replace(/"/g,'&quot;')}" onerror="this.parentElement.textContent='${i.icon}';">`
               : i.icon}</div>
@@ -676,11 +705,12 @@
   fetchJson(ASSETS_API_URL)
     .then(assetFiles =>
       Promise.all([
-        fetchJson(ICONS_API_URL).catch(() => []), // Icons/ folder is optional — missing or empty is fine
-        fetchJson(NEW_API_URL).catch(() => [])    // New/ folder is optional too
-      ]).then(([iconFiles, newFiles]) => render(assetFiles, iconFiles, newFiles))
+        fetchJson(ICONS_API_URL).catch(() => []),   // Icons/ folder is optional — missing or empty is fine
+        fetchJson(NEW_API_URL).catch(() => []),     // New/ folder is optional too
+        fetchJson(UPDATED_API_URL).catch(() => [])  // Updated/ folder is optional too
+      ]).then(([iconFiles, newFiles, updatedFiles]) => render(assetFiles, iconFiles, newFiles, updatedFiles))
     )
-    .catch(() => render(FALLBACK_FILES, [], []));
+    .catch(() => render(FALLBACK_FILES, [], [], []));
 })();
 
 // Icon lightbox — click a card's render to see it larger
