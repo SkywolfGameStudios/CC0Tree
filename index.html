@@ -506,10 +506,37 @@
 (function(){
   const REPO = "SkywolfGameStudios/CC0Tree";
   const BRANCH = "main";
-  const ASSETS_API_URL = `https://api.github.com/repos/${REPO}/contents/Assets?ref=${BRANCH}`;
-  const ICONS_API_URL = `https://api.github.com/repos/${REPO}/contents/Icons?ref=${BRANCH}`;
-  const NEW_API_URL = `https://api.github.com/repos/${REPO}/contents/New?ref=${BRANCH}`;
-  const UPDATED_API_URL = `https://api.github.com/repos/${REPO}/contents/Updated?ref=${BRANCH}`;
+  // One recursive tree fetch covers Assets/, Icons/, New/, Updated/, and Categories/*
+  // instead of a separate API call per folder — keeps this to 1 request instead of 4+,
+  // which matters since unauthenticated GitHub API calls are capped at 60/hour per visitor.
+  const TREE_API_URL = `https://api.github.com/repos/${REPO}/git/trees/${BRANCH}?recursive=1`;
+
+  function rawUrl(path){
+    return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/` + path.split("/").map(encodeURIComponent).join("/");
+  }
+  function blobUrl(path){
+    return `https://github.com/${REPO}/blob/${BRANCH}/` + path.split("/").map(encodeURIComponent).join("/");
+  }
+
+  // Files directly inside a top-level folder (no subfolders) — used for Assets/, Icons/, New/, Updated/.
+  function filesIn(entries, folder){
+    const prefix = folder + "/";
+    return entries
+      .filter(e => e.path.startsWith(prefix) && !e.path.slice(prefix.length).includes("/"))
+      .map(e => ({ name: e.path.slice(prefix.length), path: e.path, size: e.size }));
+  }
+
+  // Categories/<CategoryName>/<file> — each subfolder name becomes a category label.
+  function categoryFoldersIn(entries){
+    const map = {};
+    for (const e of entries){
+      const m = e.path.match(/^Categories\/([^/]+)\/([^/]+)$/);
+      if (!m) continue;
+      const [, cat, filename] = m;
+      (map[cat] = map[cat] || []).push({ name: filename, path: e.path, size: e.size });
+    }
+    return map;
+  }
 
   // Fallback data in case the GitHub API is unreachable or rate-limited.
   const FALLBACK_FILES = [
@@ -517,12 +544,7 @@
     "SM_ComputerTower.fbx","SM_CrowBar.fbx","SM_FireAxe.fbx","SM_HammerClaw.fbx",
     "SM_Screwdriver.fbx","SM_Sword_1_Shortsword.fbx","SM_Sword_2_Katana.fbx",
     "SM_Tree_1.fbx","SM_WateringCan.fbx","SM_Wrench.fbx"
-  ].map(name => ({
-    name,
-    size: null,
-    download_url: `https://raw.githubusercontent.com/${REPO}/${BRANCH}/Assets/${name}`,
-    html_url: `https://github.com/${REPO}/blob/${BRANCH}/Assets/${name}`
-  }));
+  ].map(name => ({ name, path: `Assets/${name}`, size: null }));
 
   const CATEGORY_RULES = [
     { test: /tree|plant|bush|rock|forest/i, cat: "Nature", icon: "🌳" },
@@ -565,7 +587,7 @@
   // Matches an Icons/ file to its Assets/ file by shared name tokens, since filenames
   // aren't always exact matches (missing prefixes, inconsistent _Render suffixes, etc).
   function matchIcons(assetItems, iconFiles){
-    const icons = iconFiles.map(f => ({ tokens: tokenize(f.name), url: f.download_url }));
+    const icons = iconFiles.map(f => ({ tokens: tokenize(f.name), url: rawUrl(f.path) }));
     for (const item of assetItems){
       const assetTokens = tokenize(item.filename);
       let best = null, bestScore = 0;
@@ -598,6 +620,19 @@
     }
   }
 
+  // Drag-and-drop categorization: drop a copy of an asset into Categories/<Name>/ to tag
+  // it with that category, overriding the keyword-guessed default. Anything not manually
+  // sorted keeps falling back to categorize()'s keyword guess, so nothing goes untagged.
+  function matchCategories(assetItems, categoryMap){
+    for (const [catName, files] of Object.entries(categoryMap)){
+      const markers = files.map(f => tokenize(f.name));
+      for (const item of assetItems){
+        const assetTokens = tokenize(item.filename);
+        if (markers.some(tokens => tokens.some(t => assetTokens.includes(t)))) item.cat = catName;
+      }
+    }
+  }
+
   function formatBytes(bytes){
     if (!bytes && bytes !== 0) return "";
     if (bytes < 1024) return bytes + " B";
@@ -606,7 +641,7 @@
     return (kb / 1024).toFixed(1) + " MB";
   }
 
-  function render(files, iconFiles, newFiles, updatedFiles){
+  function render(files, iconFiles, newFiles, updatedFiles, categoryMap){
     const grid = document.getElementById("grid");
     const loadState = document.getElementById("load-state");
     const filtersEl = document.getElementById("filters");
@@ -626,8 +661,8 @@
           thumb: null,
           isNew: false,
           isUpdated: false,
-          download: f.download_url,
-          view: f.html_url
+          download: rawUrl(f.path),
+          view: blobUrl(f.path)
         };
       })
       .sort((a,b) => a.name.localeCompare(b.name));
@@ -635,6 +670,7 @@
     if (iconFiles && iconFiles.length) matchIcons(items, iconFiles);
     if (newFiles && newFiles.length) matchNew(items, newFiles);
     if (updatedFiles && updatedFiles.length) matchUpdated(items, updatedFiles);
+    if (categoryMap && Object.keys(categoryMap).length) matchCategories(items, categoryMap);
 
     if (items.length === 0){
       loadState.textContent = "No assets found yet — check back soon 🌱";
@@ -702,15 +738,17 @@
     });
   }
 
-  fetchJson(ASSETS_API_URL)
-    .then(assetFiles =>
-      Promise.all([
-        fetchJson(ICONS_API_URL).catch(() => []),   // Icons/ folder is optional — missing or empty is fine
-        fetchJson(NEW_API_URL).catch(() => []),     // New/ folder is optional too
-        fetchJson(UPDATED_API_URL).catch(() => [])  // Updated/ folder is optional too
-      ]).then(([iconFiles, newFiles, updatedFiles]) => render(assetFiles, iconFiles, newFiles, updatedFiles))
-    )
-    .catch(() => render(FALLBACK_FILES, [], [], []));
+  fetchJson(TREE_API_URL)
+    .then(data => {
+      const entries = (data.tree || []).filter(e => e.type === "blob");
+      const assetFiles = filesIn(entries, "Assets");
+      const iconFiles = filesIn(entries, "Icons");
+      const newFiles = filesIn(entries, "New");
+      const updatedFiles = filesIn(entries, "Updated");
+      const categoryMap = categoryFoldersIn(entries);
+      render(assetFiles, iconFiles, newFiles, updatedFiles, categoryMap);
+    })
+    .catch(() => render(FALLBACK_FILES, [], [], [], {}));
 })();
 
 // Icon lightbox — click a card's render to see it larger
