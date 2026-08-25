@@ -1,21 +1,17 @@
 # Security Policy
 
-## Supported Versions
+CC0Tree is a static asset library and a small, purely client-side website (no backend, no user accounts, no stored user data). The realistic attack surface here is small, but if you find something concerning, please report it.
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+## What to report
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+- A security issue with the website itself (e.g. something in `index.html`, the GitHub Actions workflow, or how the site pulls data from the GitHub API)
+- A file in the repo that appears malicious, tampered with, or not what it claims to be
+- Any supply-chain concern with something this project depends on
 
-## Reporting a Vulnerability
+## What not to worry about reporting here
 
-Use this section to tell people how to report a vulnerability.
+General bugs (a broken filter, a display glitch) aren't security issues — please use a regular [issue](../../issues/new/choose) for those instead.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+## How to report
+
+Email **skywolfgamestudios@gmail.com** with details. This is a solo project, so response time may vary, but reports are taken seriously and read personally — please don't publicly disclose a real vulnerability before it's had a chance to be addressed.
