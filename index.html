@@ -129,6 +129,14 @@
   .btn-gold:hover{background:var(--gold-bright); transform:translateY(-2px);}
   .btn-ghost{background:transparent; color:var(--text); border-color:var(--border);}
   .btn-ghost:hover{border-color:var(--accent); color:var(--accent-bright); transform:translateY(-2px);}
+  .btn-sponsors{background:#ea4aaa; color:#fff0f8;}
+  .btn-sponsors:hover{background:#f56cbe; transform:translateY(-2px);}
+  .btn-kofi{background:#29abe0; color:#062338;}
+  .btn-kofi:hover{background:#4dc0f2; transform:translateY(-2px);}
+  .btn-itch{background:#fa5c5c; color:#3a0a0a;}
+  .btn-itch:hover{background:#ff7a7a; transform:translateY(-2px);}
+  .btn-gumroad{background:#ff90e8; color:#3a0a2e;}
+  .btn-gumroad:hover{background:#ffaef0; transform:translateY(-2px);}
 
   .stats{display:flex; flex-wrap:wrap; gap:0; justify-content:center; border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:760px; margin:0 auto;}
   .stat{flex:1 1 180px; padding:22px 16px; text-align:center; border-left:1px solid var(--border);}
@@ -294,7 +302,7 @@
   .support-card .icon{font-size:1.9rem;}
   .support-card h3{margin:0; font-size:1.05rem;}
   .support-card p{color:var(--text-dim); font-size:0.86rem; margin:0; flex:1;}
-  .support-card .btn{justify-content:center; margin-top:4px;}
+  .support-card .btn{justify-content:center; margin-top:4px; min-height:44px; white-space:nowrap; padding-left:14px; padding-right:14px;}
 
   /* LICENSE */
   .license-box{
@@ -426,31 +434,31 @@
           <div class="icon">☕</div>
           <h3>Patreon</h3>
           <p>Fuel weekly releases and unlock Blender source files, early access, and supporter perks.</p>
-          <a class="btn btn-gold" href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Become a Patron</a>
+          <a class="btn btn-gold" href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Support on Patreon</a>
         </div>
         <div class="support-card">
           <div class="icon">💛</div>
           <h3>GitHub Sponsors</h3>
           <p>Prefer GitHub? Sponsor CC0Tree directly — it shows up right on the repo you're already using.</p>
-          <a class="btn btn-primary" href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">Sponsor on GitHub</a>
+          <a class="btn btn-sponsors" href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">Sponsor on GitHub</a>
         </div>
         <div class="support-card">
           <div class="icon">🧡</div>
           <h3>Ko-fi</h3>
           <p>Prefer a quick one-time tip over a subscription? Buy a coffee, no account required.</p>
-          <a class="btn btn-ghost" href="https://ko-fi.com/skywolfgamestudios" target="_blank" rel="noopener">Tip on Ko-fi</a>
+          <a class="btn btn-kofi" href="https://ko-fi.com/skywolfgamestudios" target="_blank" rel="noopener">Tip on Ko-fi</a>
         </div>
         <div class="support-card">
           <div class="icon">🎮</div>
           <h3>itch.io</h3>
           <p>Browse and grab assets individually, rate the project, and help it reach more developers.</p>
-          <a class="btn btn-ghost" href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">Visit itch.io Page</a>
+          <a class="btn btn-itch" href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">Browse on itch.io</a>
         </div>
         <div class="support-card">
           <div class="icon">🛒</div>
           <h3>Gumroad</h3>
           <p>Grab the pack as a pay-what-you-want download — free is an option, but tips are always welcome.</p>
-          <a class="btn btn-ghost" href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Get it on Gumroad</a>
+          <a class="btn btn-gumroad" href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Buy on Gumroad</a>
         </div>
       </div>
       <p class="grid-note" style="margin-top:32px;">CC0Tree is a side project from <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener">Skywolf Game Studios</a> — check out the games it helps fund.</p>
