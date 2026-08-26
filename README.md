@@ -5,6 +5,7 @@ The easiest way in: a visual grid of every asset, filterable by category, with a
 
 [![Support on Patreon](https://img.shields.io/badge/Patreon-support-f96854?logo=patreon&logoColor=white)](https://patreon.com/skywolfgamestudios)
 [![Sponsor on GitHub](https://img.shields.io/badge/GitHub%20Sponsors-sponsor-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/SkywolfGameStudios)
+[![Get it on Gumroad](https://img.shields.io/badge/Gumroad-pay%20what%20you%20want-ff90e8?logo=gumroad&logoColor=white)](https://skywolfgamestudios.gumroad.com/l/cc0tree)
 [![License: CC0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](LICENSE)
 
 CC0Tree is an ever‑growing collection of completely free, CC0‑licensed game assets created for indie developers, students, hobbyists, and anyone building games. All assets in this repository are public domain — no attribution required, no restrictions, and free for commercial and personal use.
@@ -54,7 +55,8 @@ You can access CC0Tree in several ways:
 1. **Browse & Download Individually (Recommended)** — Browse the whole library as a visual grid, filter by category, and grab exactly what you need on the [CC0Tree website](https://skywolfgamestudios.github.io/CC0Tree/).
 2. **Download Everything at Once** — Clone or download this repository to get the full asset library in one place, ideal if you want it all.
 3. **Browse on itch.io** — Assets are also viewable individually on [itch.io](https://skywolfgamestudios.itch.io/cc0tree).
-4. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
+4. **Get it on Gumroad** — Grab the pack as a pay-what-you-want download on [Gumroad](https://skywolfgamestudios.gumroad.com/l/cc0tree) — free is an option, tips are welcome.
+5. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
 
 ## 🌱 Project Goal
 
@@ -67,6 +69,7 @@ The mission is simple: grow a massive, community‑friendly forest of free game 
 Stay updated on new asset drops, dev logs, and project growth:
 
 - Patreon: https://patreon.com/skywolfgamestudios
+- Gumroad: https://skywolfgamestudios.gumroad.com/l/cc0tree
 - X (Twitter): https://x.com/skywolfgamestds
 - Bluesky: https://bsky.app/profile/skywolfgamestudios.bsky.social
 
