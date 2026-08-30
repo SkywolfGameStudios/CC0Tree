@@ -622,14 +622,15 @@
     }
   }
 
-  // Flags an item as "New" if a file with a shared name token exists in the New/ folder —
-  // drop the exact same file in there (or anything sharing a word) to feature it, remove
-  // it to un-feature it. Same matching approach as Icons/, purely manual/opt-in.
+  // Flags an item as "New" if a file whose tokens are fully covered by an asset's tokens
+  // exists in the New/ folder — drop the exact same file in there (or a superset-name
+  // variant) to feature it, remove it to un-feature it. Requiring every marker token to
+  // match (not just one) avoids false hits from a single shared generic word (e.g. "tree").
   function matchNew(assetItems, newFiles){
     const markers = newFiles.map(f => tokenize(f.name));
     for (const item of assetItems){
       const assetTokens = tokenize(item.filename);
-      item.isNew = markers.some(tokens => tokens.some(t => assetTokens.includes(t)));
+      item.isNew = markers.some(tokens => tokens.every(t => assetTokens.includes(t)));
     }
   }
 
@@ -639,7 +640,7 @@
     const markers = updatedFiles.map(f => tokenize(f.name));
     for (const item of assetItems){
       const assetTokens = tokenize(item.filename);
-      item.isUpdated = markers.some(tokens => tokens.some(t => assetTokens.includes(t)));
+      item.isUpdated = markers.some(tokens => tokens.every(t => assetTokens.includes(t)));
     }
   }
 
@@ -651,7 +652,7 @@
       const markers = files.map(f => tokenize(f.name));
       for (const item of assetItems){
         const assetTokens = tokenize(item.filename);
-        if (markers.some(tokens => tokens.some(t => assetTokens.includes(t)))) item.cat = catName;
+        if (markers.some(tokens => tokens.every(t => assetTokens.includes(t)))) item.cat = catName;
       }
     }
   }
