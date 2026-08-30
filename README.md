@@ -55,8 +55,9 @@ You can access CC0Tree in several ways:
 1. **Browse & Download Individually (Recommended)** — Browse the whole library as a visual grid, filter by category, and grab exactly what you need on the [CC0Tree website](https://skywolfgamestudios.github.io/CC0Tree/).
 2. **Download Everything at Once** — Clone or download this repository to get the full asset library in one place, ideal if you want it all.
 3. **Browse on itch.io** — Assets are also viewable individually on [itch.io](https://skywolfgamestudios.itch.io/cc0tree).
-4. **Get it on Gumroad** — Grab the pack as a pay-what-you-want download on [Gumroad](https://skywolfgamestudios.gumroad.com/l/cc0tree) — free is an option, tips are welcome.
-5. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
+4. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
+
+A pre-packaged zip of every FBX, plus the original Blender source files, are available as [Patreon supporter perks](https://patreon.com/skywolfgamestudios) for anyone who'd rather not download assets one by one.
 
 ## 🌱 Project Goal
 
