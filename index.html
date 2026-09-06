@@ -176,6 +176,7 @@
     padding:22px; display:flex; flex-direction:column; gap:12px; transition:all .18s;
   }
   .card:hover{background:var(--card-hover); border-color:var(--accent); transform:translateY(-3px);}
+  .card:target{border-color:var(--accent); box-shadow:0 0 0 3px rgba(87,199,133,0.35);}
   .card.is-new{border-color:rgba(242,181,68,0.4);}
   .card.is-updated{border-color:rgba(91,157,217,0.4);}
   .new-badge{
@@ -600,6 +601,13 @@
     return n.replace(/\s+/g, " ").trim();
   }
 
+  // Deep-link anchor for a card, e.g. "Pine Tree" -> "pine-tree". Auto-derived from the
+  // display name, so linking to #<slug> from itch.io/devlogs needs no separate list to
+  // maintain — it just tracks whatever the asset is currently named.
+  function slugify(name){
+    return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
   const NOISE_TOKENS = new Set(["sm", "render", "icon", "thumb", "thumbnail", "final", "v1", "v2"]);
 
   function tokenize(filename){
@@ -678,9 +686,11 @@
       .filter(f => /\.(fbx|glb|gltf|obj)$/i.test(f.name))
       .map(f => {
         const meta = categorize(f.name);
+        const name = prettyName(f.name);
         return {
           filename: f.name,
-          name: prettyName(f.name),
+          name,
+          slug: slugify(name),
           ext: f.name.split(".").pop().toUpperCase(),
           size: formatBytes(f.size),
           cat: meta.cat,
@@ -722,7 +732,7 @@
           || (filter === "✨ New" && i.isNew)
           || (filter === "🔄 Updated" && i.isUpdated))
         .map(i => `
-          <div class="card${i.isNew ? ' is-new' : ''}${i.isUpdated ? ' is-updated' : ''}">
+          <div class="card${i.isNew ? ' is-new' : ''}${i.isUpdated ? ' is-updated' : ''}" id="${i.slug}">
             ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
             ${i.isUpdated ? '<span class="updated-badge">🔄 UPDATED</span>' : ''}
             <div class="icon">${i.thumb
@@ -754,6 +764,14 @@
     draw("All");
     loadState.style.display = "none";
     grid.style.display = "grid";
+
+    // Deep-link support: #<slugified-name> in the URL scrolls straight to that card.
+    // Runs after render since the grid doesn't exist yet at page-load time for the
+    // browser's own anchor-scrolling to catch it.
+    if (location.hash){
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   }
 
   const ghHeaders = { headers: { "Accept": "application/vnd.github+json" } };
