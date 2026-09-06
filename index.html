@@ -529,8 +529,8 @@
 (function(){
   const REPO = "SkywolfGameStudios/CC0Tree";
   const BRANCH = "main";
-  // One recursive tree fetch covers Assets/, Icons/, New/, Updated/, and Categories/*
-  // instead of a separate API call per folder — keeps this to 1 request instead of 4+,
+  // One recursive tree fetch covers Assets/, Icons/, New Models/, Updated Models/, and
+  // All Models/* instead of a separate API call per folder — keeps this to 1 request instead of 4+,
   // which matters since unauthenticated GitHub API calls are capped at 60/hour per visitor.
   const TREE_API_URL = `https://api.github.com/repos/${REPO}/git/trees/${BRANCH}?recursive=1`;
 
@@ -541,7 +541,8 @@
     return `https://github.com/${REPO}/blob/${BRANCH}/` + path.split("/").map(encodeURIComponent).join("/");
   }
 
-  // Files directly inside a top-level folder (no subfolders) — used for Assets/, Icons/, New/, Updated/.
+  // Files directly inside a top-level folder (no subfolders) — used for Assets/, Icons/,
+  // New Models/, Updated Models/.
   function filesIn(entries, folder){
     const prefix = folder + "/";
     return entries
@@ -549,11 +550,11 @@
       .map(e => ({ name: e.path.slice(prefix.length), path: e.path, size: e.size }));
   }
 
-  // Categories/<CategoryName>/<file> — each subfolder name becomes a category label.
+  // All Models/<CategoryName>/<file> — each subfolder name becomes a category label.
   function categoryFoldersIn(entries){
     const map = {};
     for (const e of entries){
-      const m = e.path.match(/^Categories\/([^/]+)\/([^/]+)$/);
+      const m = e.path.match(/^All Models\/([^/]+)\/([^/]+)$/);
       if (!m) continue;
       const [, cat, filename] = m;
       (map[cat] = map[cat] || []).push({ name: filename, path: e.path, size: e.size });
@@ -623,7 +624,7 @@
   }
 
   // Flags an item as "New" if a file whose tokens are fully covered by an asset's tokens
-  // exists in the New/ folder — drop the exact same file in there (or a superset-name
+  // exists in the New Models/ folder — drop the exact same file in there (or a superset-name
   // variant) to feature it, remove it to un-feature it. Requiring every marker token to
   // match (not just one) avoids false hits from a single shared generic word (e.g. "tree").
   function matchNew(assetItems, newFiles){
@@ -644,7 +645,7 @@
     }
   }
 
-  // Drag-and-drop categorization: drop a copy of an asset into Categories/<Name>/ to tag
+  // Drag-and-drop categorization: drop a copy of an asset into All Models/<Name>/ to tag
   // it with that category, overriding the keyword-guessed default. Anything not manually
   // sorted keeps falling back to categorize()'s keyword guess, so nothing goes untagged.
   function matchCategories(assetItems, categoryMap){
@@ -767,8 +768,8 @@
       const entries = (data.tree || []).filter(e => e.type === "blob");
       const assetFiles = filesIn(entries, "Assets");
       const iconFiles = filesIn(entries, "Icons");
-      const newFiles = filesIn(entries, "New");
-      const updatedFiles = filesIn(entries, "Updated");
+      const newFiles = filesIn(entries, "New Models");
+      const updatedFiles = filesIn(entries, "Updated Models");
       const categoryMap = categoryFoldersIn(entries);
       render(assetFiles, iconFiles, newFiles, updatedFiles, categoryMap);
     })
