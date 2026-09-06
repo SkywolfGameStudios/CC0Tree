@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — CC0Tree</title>
+<meta name="description" content="Every CC0Tree render in one grid — click any model to download it.">
+<link rel="canonical" href="https://skywolfgamestudios.github.io/CC0Tree/gallery.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+<style>
+  :root{
+    --bg:#0e1512;
+    --card:#182420;
+    --border:#28382f;
+    --text:#e9f2ec;
+    --text-dim:#9fb5a8;
+    --accent:#57c785;
+    --accent-bright:#7fe3a8;
+    --radius:14px;
+    --maxw:1600px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  header{padding:20px 0; border-bottom:1px solid var(--border);}
+  .head-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:8px; font-weight:800; font-size:1.2rem; text-decoration:none;}
+  .brand .logo{font-size:1.4rem;}
+  .back{font-size:0.9rem; color:var(--text-dim); text-decoration:none; border:1px solid var(--border); padding:8px 14px; border-radius:999px; transition:all .15s;}
+  .back:hover{color:var(--text); border-color:var(--accent);}
+  .intro{padding:32px 0 8px; text-align:center;}
+  .intro h1{margin:0 0 8px; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800;}
+  .intro p{margin:0; color:var(--text-dim);}
+  .load-state{text-align:center; padding:60px 0; color:var(--text-dim);}
+  .gallery{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:4px;
+    padding:24px 0 60px;
+  }
+  .tile{
+    position:relative; aspect-ratio:1; overflow:hidden; background:var(--card);
+    border-radius:8px; display:block; text-decoration:none;
+  }
+  .tile img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .2s;}
+  .tile:hover img{transform:scale(1.06);}
+  .tile .label{
+    position:absolute; left:0; right:0; bottom:0; padding:10px 12px 8px;
+    background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    font-size:0.85rem; font-weight:700; opacity:0; transition:opacity .15s;
+  }
+  .tile:hover .label{opacity:1;}
+  .tile .dl-hint{
+    position:absolute; top:10px; right:10px; background:rgba(6,10,8,0.7); color:var(--accent-bright);
+    font-size:0.75rem; font-weight:700; padding:4px 9px; border-radius:999px; opacity:0; transition:opacity .15s;
+  }
+  .tile:hover .dl-hint{opacity:1;}
+  .foot-note{text-align:center; color:var(--text-dim); font-size:0.85rem; padding-bottom:40px;}
+  .foot-note a{color:var(--accent-bright); text-decoration:none;}
+  .foot-note a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head-row">
+    <a href="index.html#top" class="brand"><span class="logo">🌳</span> CC0Tree</a>
+    <a href="index.html#library" class="back">← Back to Library</a>
+  </div>
+</header>
+
+<div class="intro">
+  <h1>The Full Gallery</h1>
+  <p>Every model at a glance — click any render to download the FBX.</p>
+</div>
+
+<div class="wrap">
+  <div class="load-state" id="load-state">Loading the forest… 🌱</div>
+  <div class="gallery" id="gallery" style="display:none;"></div>
+</div>
+
+<p class="foot-note">Want filters, categories, and file details instead? <a href="index.html#library">Browse the Library</a>.</p>
+
+<script>
+(function(){
+  const REPO = "SkywolfGameStudios/CC0Tree";
+  const BRANCH = "main";
+  const TREE_API_URL = `https://api.github.com/repos/${REPO}/git/trees/${BRANCH}?recursive=1`;
+  const ghHeaders = { headers: { "Accept": "application/vnd.github+json" } };
+
+  function rawUrl(path){
+    return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/` + path.split("/").map(encodeURIComponent).join("/");
+  }
+
+  function filesIn(entries, folder){
+    const prefix = folder + "/";
+    return entries
+      .filter(e => e.path.startsWith(prefix) && !e.path.slice(prefix.length).includes("/"))
+      .map(e => ({ name: e.path.slice(prefix.length), path: e.path }));
+  }
+
+  const NOISE_TOKENS = new Set(["sm", "render", "icon", "thumb", "thumbnail", "final", "v1", "v2"]);
+  function tokenize(filename){
+    return filename
+      .replace(/\.[^/.]+$/, "")
+      .split(/[_\s-]+/)
+      .map(t => t.toLowerCase())
+      .filter(t => t && !NOISE_TOKENS.has(t));
+  }
+
+  function prettyName(filename){
+    let n = filename.replace(/\.[^/.]+$/, "");
+    n = n.replace(/^SM_/i, "");
+    n = n.replace(/_/g, " ").trim();
+    n = n.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+    return n.replace(/\s+/g, " ").trim();
+  }
+
+  // Same best-score token matching the main library page uses to pair an asset with its render.
+  function matchIcon(assetTokens, icons){
+    let best = null, bestScore = 0;
+    for (const icon of icons){
+      const score = icon.tokens.filter(t => assetTokens.includes(t)).length;
+      if (score > bestScore){ bestScore = score; best = icon; }
+    }
+    return bestScore > 0 ? best : null;
+  }
+
+  fetch(TREE_API_URL, ghHeaders)
+    .then(res => { if (!res.ok) throw new Error("API error " + res.status); return res.json(); })
+    .then(data => {
+      const entries = (data.tree || []).filter(e => e.type === "blob");
+      const assetFiles = filesIn(entries, "Assets").filter(f => /\.(fbx|glb|gltf|obj)$/i.test(f.name));
+      const iconFiles = filesIn(entries, "Icons").map(f => ({ tokens: tokenize(f.name), url: rawUrl(f.path) }));
+
+      const items = assetFiles.map(f => {
+        const icon = matchIcon(tokenize(f.name), iconFiles);
+        return icon ? { name: prettyName(f.name), thumb: icon.url, download: rawUrl(f.path) } : null;
+      }).filter(Boolean).sort((a,b) => a.name.localeCompare(b.name));
+
+      const gallery = document.getElementById("gallery");
+      const loadState = document.getElementById("load-state");
+
+      if (items.length === 0){
+        loadState.textContent = "No renders found yet — check back soon 🌱";
+        return;
+      }
+
+      gallery.innerHTML = items.map(i => `
+        <a class="tile" href="${i.download}" download title="Download ${i.name}">
+          <img src="${i.thumb}" alt="${i.name}" loading="lazy">
+          <span class="dl-hint">⬇ Download</span>
+          <span class="label">${i.name}</span>
+        </a>
+      `).join("");
+
+      loadState.style.display = "none";
+      gallery.style.display = "grid";
+    })
+    .catch(() => {
+      document.getElementById("load-state").textContent = "Couldn't load the gallery right now — try again shortly, or browse the Library instead.";
+    });
+})();
+</script>
+
+</body>
+</html>
