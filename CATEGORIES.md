@@ -31,7 +31,7 @@ That's it — no code changes, ever.
 - Sports — Baseball Bat, Bowling Ball, Bowling Pin
 - Tools — Crowbar, Hammer Claw, Screwdriver, Wrench
 - Vehicles — Airplane
-- Weapons — Fire Axe, Sword 1 (Shortsword), Sword 2 (Katana)
+- Weapons — Fire Axe, Molotov, Sword 1 (Shortsword), Sword 2 (Katana)
 
 ## New / Updated tags work the same way
 
