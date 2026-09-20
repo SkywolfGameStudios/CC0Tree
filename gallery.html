@@ -36,6 +36,10 @@
   .intro{padding:32px 0 8px; text-align:center;}
   .intro h1{margin:0 0 8px; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800;}
   .intro p{margin:0; color:var(--text-dim);}
+  .search-wrap{max-width:420px; margin:18px auto 0; padding:0 24px;}
+  .search-input{width:100%; background:var(--card); border:1px solid var(--border); border-radius:999px; color:var(--text); padding:11px 18px; font-size:0.95rem; font-family:inherit;}
+  .search-input:focus{outline:none; border-color:var(--accent);}
+  .no-results{grid-column:1/-1; text-align:center; color:var(--text-dim); padding:30px 0; margin:0;}
   .load-state{text-align:center; padding:60px 0; color:var(--text-dim);}
   .gallery{
     display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:4px;
@@ -76,6 +80,8 @@
   <h1>The Full Gallery</h1>
   <p>Every model at a glance — click any render to download the FBX.</p>
 </div>
+
+<div class="search-wrap" id="search-wrap" style="display:none;"><input type="search" id="search" class="search-input" placeholder="Search models…" aria-label="Search models" autocomplete="off"></div>
 
 <div class="wrap">
   <div class="load-state" id="load-state">Loading the forest… 🌱</div>
@@ -149,13 +155,20 @@
         return;
       }
 
-      gallery.innerHTML = items.map(i => `
+      const draw = query => {
+        const matches = items.filter(i => !query || i.name.toLowerCase().includes(query));
+        gallery.innerHTML = !matches.length ? `<p class="no-results">No models match your search.</p>` : matches.map(i => `
         <a class="tile" href="${i.download}" download title="Download ${i.name}">
           <img src="${i.thumb}" alt="${i.name}" loading="lazy">
           <span class="dl-hint">⬇ Download</span>
           <span class="label">${i.name}</span>
         </a>
       `).join("");
+      };
+      draw("");
+      const searchEl = document.getElementById("search");
+      document.getElementById("search-wrap").style.display = "";
+      searchEl.addEventListener("input", () => draw(searchEl.value.trim().toLowerCase()));
 
       loadState.style.display = "none";
       gallery.style.display = "grid";

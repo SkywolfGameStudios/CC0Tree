@@ -151,6 +151,12 @@
   section.pad{padding:80px 0;}
   section.alt{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
 
+  /* SEARCH */
+  .search-wrap{max-width:420px; margin:0 auto 18px;}
+  .search-input{width:100%; background:var(--card); border:1px solid var(--border); border-radius:999px; color:var(--text); padding:11px 18px; font-size:0.95rem; font-family:inherit;}
+  .search-input:focus{outline:none; border-color:var(--accent);}
+  .no-results{grid-column:1/-1; text-align:center; color:var(--text-dim); padding:30px 0; margin:0;}
+
   /* FILTERS */
   .filters{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:36px;}
   .filter-btn{
@@ -307,24 +313,6 @@
 
   .load-state{text-align:center; color:var(--text-dim); padding:40px 0; font-size:0.95rem;}
 
-  /* SCHEDULE */
-  .schedule-cols{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:8px;}
-  @media (max-width:720px){.schedule-cols{grid-template-columns:1fr;}}
-  .sched-card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px;}
-  .sched-card h3{margin:0 0 12px; font-size:1.1rem; display:flex; align-items:center; gap:8px;}
-  .sched-card p{color:var(--text-dim); margin:0 0 14px; font-size:0.94rem;}
-  .sched-card ul{margin:0; padding-left:20px; color:var(--text-dim); font-size:0.92rem;}
-  .sched-card li{margin-bottom:6px;}
-  .sched-card.free{border-color:rgba(87,199,133,0.35);}
-  .sched-card.perk{border-color:rgba(242,181,68,0.35);}
-  .sched-card.free h3{color:var(--accent-bright);}
-  .sched-card.perk h3{color:var(--gold-bright);}
-  .cadence-banner{
-    display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--border);
-    border-radius:var(--radius); padding:20px 26px; margin-bottom:28px; flex-wrap:wrap;
-  }
-  .cadence-banner .big{font-size:2rem;}
-  .cadence-banner strong{color:var(--accent-bright);}
 
   /* SUPPORT */
   .support-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:14px;}
@@ -370,12 +358,9 @@
         <a href="#library">Library</a>
         <a href="gallery.html">Gallery</a>
         <a href="#devlog">Devlog</a>
-        <a href="#schedule">Updates</a>
         <a href="#support">Support</a>
         <a href="#request">Request Model</a>
         <a href="#license">License</a>
-        <a href="https://github.com/SkywolfGameStudios/CC0Tree">GitHub</a>
-        <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener">Studio</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -411,6 +396,7 @@
         <p>Every asset below is free to download right now, straight from this repo. FBX format, low-poly, game-ready.</p>
         <p><a href="gallery.html" style="color:var(--accent-bright);">🖼️ View the full render gallery →</a></p>
       </div>
+      <div class="search-wrap" id="search-wrap" style="display:none;"><input type="search" id="search" class="search-input" placeholder="Search models…" aria-label="Search models" autocomplete="off"></div>
       <div class="filters" id="filters"></div>
       <div id="grid-container">
         <div class="load-state" id="load-state">Loading the forest… 🌱</div>
@@ -431,48 +417,14 @@
     <div class="wrap">
       <div class="section-head">
         <h2>📝 Devlog</h2>
-        <p>What's new in the forest, newest first.</p>
+        <p>What's new in the forest, newest first. New assets drop at least once a week.</p>
       </div>
       <div class="devlog-list" id="devlog-list"></div>
       <div style="text-align:center; margin-top:24px;"><button class="btn btn-ghost" id="devlog-more" style="display:none;">Show older posts</button></div>
     </div>
   </section>
 
-  <section class="pad" id="schedule">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>📅 Update Schedule</h2>
-        <p>CC0Tree grows a little more every week — steady, reliable growth rather than big irregular drops.</p>
-      </div>
-      <div class="cadence-banner">
-        <span class="big">🌱</span>
-        <div><strong>At least one new asset every week</strong>, sometimes two or more depending on workload and inspiration. The goal is a forest that keeps expanding, week after week.</div>
-      </div>
-      <div class="schedule-cols">
-        <div class="sched-card free">
-          <h3>🌳 Free forever</h3>
-          <p>Available here in this repo the moment it's released — no catch.</p>
-          <ul>
-            <li>Game-ready FBX files</li>
-            <li>CC0 licensed — public domain</li>
-            <li>No attribution required</li>
-            <li>Commercial &amp; personal use welcome</li>
-          </ul>
-        </div>
-        <div class="sched-card perk">
-          <h3>💛 Patreon supporter perk</h3>
-          <p>Supporting the project unlocks the original source files and helps fund weekly releases.</p>
-          <ul>
-            <li>Blender (.blend) source files</li>
-            <li>Directly funds new weekly assets</li>
-            <li>Keeps the CC0 files free for everyone</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pad alt" id="support">
+  <section class="pad" id="support">
     <div class="wrap">
       <div class="section-head">
         <h2>Support the Project</h2>
@@ -530,7 +482,7 @@
     </div>
   </section>
 
-  <section class="pad" id="license">
+  <section class="pad alt" id="license">
     <div class="wrap">
       <div class="section-head">
         <h2>License</h2>
@@ -627,14 +579,6 @@
     }
     return map;
   }
-
-  // Fallback data in case the GitHub API is unreachable or rate-limited.
-  const FALLBACK_FILES = [
-    "SM_Airplane.fbx","SM_BaseballBat.fbx","SM_Bowling_Ball.fbx","SM_Bowling_Pin.fbx",
-    "SM_ComputerTower.fbx","SM_CrowBar.fbx","SM_FireAxe.fbx","SM_HammerClaw.fbx",
-    "SM_Screwdriver.fbx","SM_Sword_1_Shortsword.fbx","SM_Sword_2_Katana.fbx",
-    "SM_Tree_Rounded.fbx","SM_WateringCan.fbx","SM_Wrench.fbx"
-  ].map(name => ({ name, path: `Assets/${name}`, size: null }));
 
   const CATEGORY_RULES = [
     { test: /tree|plant|bush|rock|forest/i, cat: "Nature", icon: "🌳" },
@@ -777,7 +721,7 @@
       return;
     }
 
-    statCount.textContent = items.length + (items.length === FALLBACK_FILES.length ? "+" : "");
+    statCount.textContent = items.length;
 
     const hasNew = items.some(i => i.isNew);
     const hasUpdated = items.some(i => i.isUpdated);
@@ -789,11 +733,15 @@
         `<button class="filter-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`
       ).join("");
 
-    function draw(filter){
-      grid.innerHTML = items
-        .filter(i => filter === "All" || i.cat === filter
+    let currentFilter = "All", query = "";
+    function draw(){
+      const filter = currentFilter;
+      const matches = items.filter(i =>
+        (filter === "All" || i.cat === filter
           || (filter === "✨ New" && i.isNew)
           || (filter === "🔄 Updated" && i.isUpdated))
+        && (!query || (i.name + " " + i.cat).toLowerCase().includes(query)));
+      grid.innerHTML = !matches.length ? `<p class="no-results">No models match your search.</p>` : matches
         .map(i => `
           <div class="card${i.isNew ? ' is-new' : ''}${i.isUpdated ? ' is-updated' : ''}" id="${i.slug}">
             ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
@@ -821,10 +769,15 @@
       if (!btn) return;
       filtersEl.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      draw(btn.dataset.cat);
+      currentFilter = btn.dataset.cat;
+      draw();
     });
 
-    draw("All");
+    const searchEl = document.getElementById("search");
+    document.getElementById("search-wrap").style.display = "";
+    searchEl.addEventListener("input", () => { query = searchEl.value.trim().toLowerCase(); draw(); });
+
+    draw();
     loadState.style.display = "none";
     grid.style.display = "grid";
 
@@ -868,29 +821,43 @@
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
-    Promise.all(posts.map(p => fetch(rawUrl(p.path)).then(r => r.ok ? r.text() : "").catch(() => ""))).then(texts => {
-      let shown = 0;
-      const html = posts.map((p, i) => texts[i].trim() ? `
-        <article class="devlog-post${++shown > DEVLOG_VISIBLE ? " devlog-older" : ""}">
+    const loadTexts = ps => Promise.all(ps.map(p => fetch(rawUrl(p.path)).then(r => r.ok ? r.text() : "").catch(() => "")));
+    const card = (p, text, older) => text.trim() ? `
+        <article class="devlog-post${older ? " devlog-older" : ""}">
           <h3>${esc(p.title)}</h3>
           ${p.date ? `<div class="devlog-date">${p.date}</div>` : ""}
-          <div class="devlog-body">${format(texts[i].trim())}</div>
-        </article>` : "").join("");
+          <div class="devlog-body">${format(text.trim())}</div>
+        </article>` : "";
+
+    // Only the newest posts are downloaded up front; older ones are fetched the first time
+    // "Show older posts" is clicked, so page load stays light as the backlog grows.
+    const first = posts.slice(0, DEVLOG_VISIBLE), rest = posts.slice(DEVLOG_VISIBLE);
+    loadTexts(first).then(texts => {
+      const html = first.map((p, i) => card(p, texts[i], false)).join("");
       if (!html) return;
       const list = document.getElementById("devlog-list");
       list.innerHTML = html;
-      if (shown > DEVLOG_VISIBLE){
-        const more = document.getElementById("devlog-more");
-        list.classList.add("collapsed");
-        more.style.display = "";
-        more.addEventListener("click", () => {
-          const collapsing = !list.classList.contains("collapsed");
-          list.classList.toggle("collapsed", collapsing);
-          more.textContent = collapsing ? "Show older posts" : "Show fewer posts";
-          if (collapsing) document.getElementById("devlog").scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
       document.getElementById("devlog").style.display = "";
+      if (!rest.length) return;
+
+      const more = document.getElementById("devlog-more");
+      list.classList.add("collapsed");
+      more.style.display = "";
+      let loaded = false;
+      more.addEventListener("click", async () => {
+        const expanding = list.classList.contains("collapsed");
+        if (expanding && !loaded){
+          more.disabled = true;
+          more.textContent = "Loading…";
+          const older = await loadTexts(rest);
+          list.insertAdjacentHTML("beforeend", rest.map((p, i) => card(p, older[i], true)).join(""));
+          loaded = true;
+          more.disabled = false;
+        }
+        list.classList.toggle("collapsed", !expanding);
+        more.textContent = expanding ? "Show fewer posts" : "Show older posts";
+        if (!expanding) document.getElementById("devlog").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     });
   }
 
@@ -914,7 +881,10 @@
       renderDevlogs(entries);
       render(assetFiles, iconFiles, newFiles, updatedFiles, categoryMap);
     })
-    .catch(() => render(FALLBACK_FILES, [], [], [], {}));
+    .catch(() => {
+      document.getElementById("load-state").innerHTML =
+        `Couldn't load the library right now — GitHub may be busy. Try again in a few minutes, or <a href="https://github.com/${REPO}/tree/${BRANCH}/Assets" target="_blank" rel="noopener" style="color:var(--accent-bright);">browse the files on GitHub</a>.`;
+    });
 })();
 
 // Icon lightbox — click a card's render to see it larger
