@@ -875,7 +875,12 @@
         const more = document.getElementById("devlog-more");
         list.classList.add("collapsed");
         more.style.display = "";
-        more.addEventListener("click", () => { list.classList.remove("collapsed"); more.style.display = "none"; });
+        more.addEventListener("click", () => {
+          const collapsing = !list.classList.contains("collapsed");
+          list.classList.toggle("collapsed", collapsing);
+          more.textContent = collapsing ? "Show older posts" : "Show fewer posts";
+          if (collapsing) document.getElementById("devlog").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       }
       document.getElementById("devlog").style.display = "";
     });
