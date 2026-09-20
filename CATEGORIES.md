@@ -23,7 +23,7 @@ That's it — no code changes, ever.
 
 ## Current categories (as of this writing)
 
-- Electronics — Computer Tower
+- Electronics — Computer Tower, Flashlight
 - Explosives — Hand Bomb
 - Garden — Watering Can
 - Misc — Abstract Zeus Sculpture, Red Pen, Trash Can
