@@ -197,6 +197,15 @@
   .card .icon img.zoomable{cursor:zoom-in; transition:transform .15s;}
   .card .icon img.zoomable:hover{transform:scale(1.06);}
 
+  /* MODEL REQUESTS */
+  .request-box{max-width:760px; margin:40px auto 0; background:var(--card); border:1px solid rgba(242,181,68,0.4); border-radius:var(--radius); padding:28px;}
+  .request-box h3{margin:0 0 8px; font-size:1.25rem; font-weight:800;}
+  .request-box p{margin:0 0 14px; color:var(--text-dim);}
+  .request-box ol{margin:0 0 18px; padding-left:22px; color:var(--text-dim); line-height:1.7;}
+  .request-box ol li strong{color:var(--text);}
+  .request-box .req-note{font-size:0.88rem; color:var(--text-faint); margin:16px 0 0;}
+  .request-box .req-note a{color:var(--accent-bright);}
+
   /* DEVLOG */
   .devlog-list{display:flex; flex-direction:column; gap:18px; max-width:760px; margin:0 auto;}
   .devlog-post{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
@@ -484,6 +493,19 @@
           <p>Prefer Gumroad? Leave a pay-what-you-want tip there instead — no account required.</p>
           <a class="btn btn-gumroad" href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Tip on Gumroad</a>
         </div>
+      </div>
+      <div class="request-box" id="request">
+        <h3>🎁 Supporters can request a model</h3>
+        <p>Every asset stays free for everyone. But if you've supported CC0Tree, you can also ask for a specific model and I'll make it and add it to the library.</p>
+        <ol>
+          <li><strong>Support CC0Tree</strong> on any platform above. A subscription or a single one-time donation both count.</li>
+          <li><strong>Contact me</strong> with your request and how you supported, so I can verify it.</li>
+          <li><strong>Request any model</strong> you'd like to see.</li>
+          <li><strong>I'll make and upload it</strong> to the library.</li>
+          <li><strong>I'll notify you</strong> as soon as it's live.</li>
+        </ol>
+        <a class="btn btn-gold" href="mailto:skywolfgamestudios@gmail.com?subject=CC0Tree%20Model%20Request">✉️ Request a Model</a>
+        <p class="req-note">Requests are for supporters only. If you've only downloaded the free models, everything is still yours to use, and you're welcome to <a href="https://github.com/SkywolfGameStudios/CC0Tree/issues/new/choose" target="_blank" rel="noopener">suggest an idea on GitHub</a>. Suggestions are read, but not guaranteed.</p>
       </div>
       <p class="grid-note" style="margin-top:32px;">CC0Tree is a side project from <a href="https://skywolfgamestudios.github.io" target="_blank" rel="noopener">Skywolf Game Studios</a> — check out the games it helps fund.</p>
     </div>
