@@ -197,6 +197,14 @@
   .card .icon img.zoomable{cursor:zoom-in; transition:transform .15s;}
   .card .icon img.zoomable:hover{transform:scale(1.06);}
 
+  /* DEVLOG */
+  .devlog-list{display:flex; flex-direction:column; gap:18px; max-width:760px; margin:0 auto;}
+  .devlog-post{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+  .devlog-post h3{margin:0 0 4px; font-size:1.15rem; font-weight:800;}
+  .devlog-post .devlog-date{color:var(--text-faint); font-size:0.8rem; font-weight:600; margin-bottom:12px;}
+  .devlog-post .devlog-body{color:var(--text-dim); white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.6;}
+  .devlog-post .devlog-body a{color:var(--accent-bright);}
+
   /* ICON LIGHTBOX */
   .img-lightbox{
     position:fixed; inset:0; z-index:200; background:rgba(6,10,8,0.92);
@@ -336,6 +344,7 @@
       <nav class="nav-links" id="nav-links">
         <a href="#library">Library</a>
         <a href="gallery.html">Gallery</a>
+        <a href="#devlog">Devlog</a>
         <a href="#schedule">Updates</a>
         <a href="#support">Support</a>
         <a href="#license">License</a>
@@ -392,7 +401,17 @@
     </div>
   </section>
 
-  <section class="pad alt" id="schedule">
+  <section class="pad alt" id="devlog" style="display:none;">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>📝 Devlog</h2>
+        <p>What's new in the forest, newest first.</p>
+      </div>
+      <div class="devlog-list" id="devlog-list"></div>
+    </div>
+  </section>
+
+  <section class="pad" id="schedule">
     <div class="wrap">
       <div class="section-head">
         <h2>📅 Update Schedule</h2>
@@ -426,7 +445,7 @@
     </div>
   </section>
 
-  <section class="pad" id="support">
+  <section class="pad alt" id="support">
     <div class="wrap">
       <div class="section-head">
         <h2>Support the Project</h2>
@@ -468,7 +487,7 @@
     </div>
   </section>
 
-  <section class="pad alt" id="license">
+  <section class="pad" id="license">
     <div class="wrap">
       <div class="section-head">
         <h2>License</h2>
@@ -779,6 +798,44 @@
     }
   }
 
+
+  // Devlog: every Devlogs/<YYYY-MM-DD Title>.txt becomes a post, newest first. The date comes
+  // from the filename (a static site can't read file dates); the body is the file's text.
+  function renderDevlogs(entries){
+    const posts = entries
+      .map(e => e.path.match(/^Devlogs\/([^/]+)\.txt$/))
+      .filter(Boolean)
+      .map(m => {
+        const base = m[1];
+        const d = base.match(/^(\d{4})-(\d{2})-(\d{2})[\s_-]*(.*)$/);
+        return {
+          path: m[0],
+          sort: base,
+          title: d ? (d[4] || "Devlog") : base,
+          date: d ? new Date(+d[1], +d[2] - 1, +d[3]).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }) : ""
+        };
+      })
+      .sort((a, b) => b.sort.localeCompare(a.sort));
+    if (!posts.length) return;
+
+    const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const format = t => esc(t)
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+
+    Promise.all(posts.map(p => fetch(rawUrl(p.path)).then(r => r.ok ? r.text() : "").catch(() => ""))).then(texts => {
+      const html = posts.map((p, i) => texts[i].trim() ? `
+        <article class="devlog-post">
+          <h3>${esc(p.title)}</h3>
+          ${p.date ? `<div class="devlog-date">${p.date}</div>` : ""}
+          <div class="devlog-body">${format(texts[i].trim())}</div>
+        </article>` : "").join("");
+      if (!html) return;
+      document.getElementById("devlog-list").innerHTML = html;
+      document.getElementById("devlog").style.display = "";
+    });
+  }
+
   const ghHeaders = { headers: { "Accept": "application/vnd.github+json" } };
 
   function fetchJson(url){
@@ -796,6 +853,7 @@
       const newFiles = filesIn(entries, "New Models");
       const updatedFiles = filesIn(entries, "Updated Models");
       const categoryMap = categoryFoldersIn(entries);
+      renderDevlogs(entries);
       render(assetFiles, iconFiles, newFiles, updatedFiles, categoryMap);
     })
     .catch(() => render(FALLBACK_FILES, [], [], [], {}));

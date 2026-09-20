@@ -46,3 +46,10 @@ That's it — no code changes, ever.
 - `New Models/` — markers for this week's brand-new asset(s).
 - `Updated Models/` — markers for migrated/re-exported older assets.
 - `All Models/` — category markers, one subfolder per category.
+- `Devlogs/` — one `.txt` file per devlog post, shown on the site newest first.
+
+## Adding a devlog post
+
+1. Create a text file in `Devlogs/` named `YYYY-MM-DD Title.txt`, for example `2026-09-27 Lantern.txt`. The date in the filename becomes the post date, and the rest becomes the title.
+2. Put just the post text inside (no title line needed). `**bold**` and plain links work.
+3. Commit it. The post appears on the site automatically, and deleting the file removes it.
