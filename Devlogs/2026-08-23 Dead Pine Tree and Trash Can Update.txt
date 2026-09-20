@@ -1,0 +1,5 @@
+Today's free model is a Dead Pine Tree. It sits a bit higher than usual at around 930 tris, from all the broken, jagged branches: a dead tree needed to actually look broken, hand-placed and irregular instead of a clean repeating pattern. I recorded the process of making it if you want to see how it came together: https://youtu.be/ccr1C72NkFE
+
+Grab the model here: https://skywolfgamestudios.github.io/CC0Tree/#dead-pine-tree
+
+Second bit of news: the Trash Can has moved from its old standalone itch.io page into CC0Tree, updated with a fresh gradient to match the current style. The original goes back to a low-poly household props challenge I did on Sketchfab, 30 days straight, back in 2018. It's tagged "Updated" on the site so it's easy to spot, and the updated version is the one to grab going forward.

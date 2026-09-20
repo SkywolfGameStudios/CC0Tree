@@ -1,0 +1,3 @@
+Years ago I created a simple hand bomb for a project that was eventually cancelled, so it never got used. I later reworked it into a free and a paid version, and the free one is a very basic asset anyone can use.
+
+You can get it right now at https://skywolfgamestudios.github.io/CC0Tree/#hand-bomb

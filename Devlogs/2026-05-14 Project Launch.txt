@@ -1,0 +1,5 @@
+CC0Tree officially launched: a growing library of 100% royalty-free, low-poly assets made by an indie game dev for fellow indie devs. It isn't driven by money, just a genuine wish to give back to the community that has supported me for years.
+
+The first two models are a Bowling Ball and a Bowling Pin, a small matching set to kick off the collection. Everything is free to download, use, modify, and share, personally or commercially, with no strings attached. Credit and donations are always appreciated but never required.
+
+The goal is at least one new low-poly asset every week. Each model goes from low-poly mesh to texture grid to UV mapping to an exported FBX that works in any engine, and the gradient textures can be swapped, recolored, or remapped however you like.

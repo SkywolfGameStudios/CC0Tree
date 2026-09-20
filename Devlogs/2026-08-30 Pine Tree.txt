@@ -1,0 +1,5 @@
+This week's free drop is a Pine Tree. I also renamed an older asset, Tree 1, to Tree Rounded so the two trees don't get confused now that there's more than one in the library.
+
+One change going forward: I'm no longer maintaining a free all-in-one zip of every FBX. Keeping it in sync with every weekly drop was more upkeep than it's worth right now. Everything is still 100% free and always will be: grab exactly what you want from the site, or clone the full repo if you want everything at once. If you'd rather not download models one by one, a pre-packaged FBX zip plus the original Blender source files is a Patreon supporter perk.
+
+Grab it here: https://skywolfgamestudios.github.io/CC0Tree/#pine-tree

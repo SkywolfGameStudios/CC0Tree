@@ -1,0 +1,5 @@
+This week's model is a Watering Can: free, CC0, low-poly, and ready to drop into any project. No attribution needed, use it commercially or personally.
+
+The bigger news is that CC0Tree finally has its own website. Instead of digging through a GitHub file list, you can browse the whole library in one place, filter by category, see what's new, and grab exactly what you need: https://skywolfgamestudios.github.io/CC0Tree/
+
+New assets drop at least once a week, everything is CC0, and it's a one-person project built in the hours between other work.

@@ -204,6 +204,7 @@
   .devlog-post .devlog-date{color:var(--text-faint); font-size:0.8rem; font-weight:600; margin-bottom:12px;}
   .devlog-post .devlog-body{color:var(--text-dim); white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.6;}
   .devlog-post .devlog-body a{color:var(--accent-bright);}
+  .devlog-list.collapsed .devlog-older{display:none;}
 
   /* ICON LIGHTBOX */
   .img-lightbox{
@@ -408,6 +409,7 @@
         <p>What's new in the forest, newest first.</p>
       </div>
       <div class="devlog-list" id="devlog-list"></div>
+      <div style="text-align:center; margin-top:24px;"><button class="btn btn-ghost" id="devlog-more" style="display:none;">Show older posts</button></div>
     </div>
   </section>
 
@@ -801,6 +803,7 @@
 
   // Devlog: every Devlogs/<YYYY-MM-DD Title>.txt becomes a post, newest first. The date comes
   // from the filename (a static site can't read file dates); the body is the file's text.
+  const DEVLOG_VISIBLE = 5;
   function renderDevlogs(entries){
     const posts = entries
       .map(e => e.path.match(/^Devlogs\/([^/]+)\.txt$/))
@@ -824,14 +827,22 @@
       .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
     Promise.all(posts.map(p => fetch(rawUrl(p.path)).then(r => r.ok ? r.text() : "").catch(() => ""))).then(texts => {
+      let shown = 0;
       const html = posts.map((p, i) => texts[i].trim() ? `
-        <article class="devlog-post">
+        <article class="devlog-post${++shown > DEVLOG_VISIBLE ? " devlog-older" : ""}">
           <h3>${esc(p.title)}</h3>
           ${p.date ? `<div class="devlog-date">${p.date}</div>` : ""}
           <div class="devlog-body">${format(texts[i].trim())}</div>
         </article>` : "").join("");
       if (!html) return;
-      document.getElementById("devlog-list").innerHTML = html;
+      const list = document.getElementById("devlog-list");
+      list.innerHTML = html;
+      if (shown > DEVLOG_VISIBLE){
+        const more = document.getElementById("devlog-more");
+        list.classList.add("collapsed");
+        more.style.display = "";
+        more.addEventListener("click", () => { list.classList.remove("collapsed"); more.style.display = "none"; });
+      }
       document.getElementById("devlog").style.display = "";
     });
   }
