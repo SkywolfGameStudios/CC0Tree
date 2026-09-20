@@ -106,7 +106,8 @@
   <a href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">itch.io</a> ·
   <a href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Gumroad</a> ·
   <a href="https://discord.gg/wp46sDj3dY" target="_blank" rel="noopener">Discord</a>
-  — supporters can also <a href="index.html#request">request a model</a>.</p>
+</p>
+<p class="foot-note">Supporters can also <a href="index.html#request">request a model</a>.</p>
 
 <script>
 (function(){
@@ -146,7 +147,8 @@
     n = n.replace(/^SM_/i, "");
     n = n.replace(/_/g, " ").trim();
     n = n.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
-    return n.replace(/\s+/g, " ").trim();
+    n = n.replace(/\s+/g, " ").trim();
+    return n.replace(/(\d+) (?=[A-Za-z])/, "$1 – ");
   }
 
   // Same best-score token matching the main library page uses to pair an asset with its render.

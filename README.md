@@ -24,7 +24,7 @@ Most assets are designed to be lightweight and easy to use, typically staying wi
 
 ## 📁 File Formats
 
-To keep CC0Tree fully accessible:
+Here's what's free and what's a supporter perk:
 
 - **FBX files** are included here in the public CC0 release. These are game‑ready and free for anyone to use.
 - **Blender source files (.blend)** are available as a supporter perk on [Patreon](https://patreon.com/skywolfgamestudios) and [itch.io](https://skywolfgamestudios.itch.io/cc0tree). Supporting the project helps me keep CC0Tree growing with new assets every week.

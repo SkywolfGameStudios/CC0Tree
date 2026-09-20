@@ -384,7 +384,7 @@
       </div>
       <div class="stats">
         <div class="stat"><span class="num" id="stat-count">—</span><span class="label">Free assets</span></div>
-        <div class="stat"><span class="num">Weekly</span><span class="label">Update schedule</span></div>
+        <div class="stat"><span class="num">Weekly</span><span class="label">New models</span></div>
         <div class="stat"><span class="num">CC0</span><span class="label">Public domain license</span></div>
       </div>
     </div>
@@ -404,12 +404,12 @@
         <div class="load-state" id="load-state">Loading the forest… 🌱</div>
         <div class="grid" id="grid" style="display:none;"></div>
       </div>
-      <p class="grid-note">Want the original Blender source (.blend) files, or a pre-packaged zip of every FBX so you don't have to grab them one by one? Both are supporter perks on <a href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Patreon</a> and <a href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">itch.io</a>. Everything here stays free either way — download assets individually above, or <a href="https://github.com/SkywolfGameStudios/CC0Tree/archive/refs/heads/main.zip">grab the full repo as-is</a>.</p>
+      <p class="grid-note">Want the original Blender source (.blend) files, or a pre-packaged zip of every FBX? Those are supporter perks on <a href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Patreon</a> and <a href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">itch.io</a>. The models themselves are always free: download them one at a time above, or <a href="https://github.com/SkywolfGameStudios/CC0Tree/archive/refs/heads/main.zip">grab the whole repo</a>.</p>
       <div class="why-strip">
         <span class="why-icon">🙋</span>
         <div>
           <strong>CC0Tree is made by one person, in the hours between other projects.</strong>
-          Every model shares the same hand-tuned gradient-shaded low-poly style — modeled, UV'd, and exported one at a time, not mass-produced. That consistency is what makes it a library instead of a pile of random files, and free is a choice, not a given. If an asset saved you time, <a href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">a few dollars on Patreon</a> or a <a href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">GitHub sponsorship</a> is what keeps new ones coming every week.
+          Every model shares the same hand-tuned, gradient-shaded low-poly style and is modeled, UV'd, and exported one at a time. That consistency is what makes it a library instead of a pile of random files. Keeping it free is a choice, so if an asset saved you time, <a href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">a few dollars on Patreon</a> or <a href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">GitHub Sponsors</a> helps keep new ones coming every week.
         </div>
       </div>
     </div>
@@ -430,7 +430,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Support the Project</h2>
-        <p>CC0Tree stays 100% free because supporters help keep it growing. Every bit helps.</p>
+        <p>CC0Tree stays free thanks to its supporters. Every bit helps keep new models coming.</p>
       </div>
       <div class="support-grid">
         <div class="support-card">
@@ -454,13 +454,13 @@
         <div class="support-card">
           <div class="icon">🎮</div>
           <h3>itch.io</h3>
-          <p>Browse and grab assets individually, rate the project, and help it reach more developers.</p>
+          <p>Follow, rate, or tip CC0Tree on itch.io to help it reach more developers.</p>
           <a class="btn btn-itch" href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">Browse on itch.io</a>
         </div>
         <div class="support-card">
           <div class="icon">🛒</div>
           <h3>Gumroad</h3>
-          <p>Prefer Gumroad? Leave a pay-what-you-want tip there instead — no account required.</p>
+          <p>Prefer Gumroad? Leave a pay-what-you-want tip there — no account required.</p>
           <a class="btn btn-gumroad" href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Tip on Gumroad</a>
         </div>
       </div>
@@ -607,7 +607,8 @@
     n = n.replace(/^SM_/i, ""); // strip static-mesh prefix
     n = n.replace(/_/g, " ").trim();
     n = n.replace(/([a-z0-9])([A-Z])/g, "$1 $2"); // split camelCase words
-    return n.replace(/\s+/g, " ").trim();
+    n = n.replace(/\s+/g, " ").trim();
+    return n.replace(/(\d+) (?=[A-Za-z])/, "$1 – "); // "Sword 1 Shortsword" -> "Sword 1 – Shortsword"
   }
 
   // Deep-link anchor for a card, e.g. "Pine Tree" -> "pine-tree". Auto-derived from the
