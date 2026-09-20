@@ -608,7 +608,7 @@
     n = n.replace(/_/g, " ").trim();
     n = n.replace(/([a-z0-9])([A-Z])/g, "$1 $2"); // split camelCase words
     n = n.replace(/\s+/g, " ").trim();
-    return n.replace(/(\d+) (?=[A-Za-z])/, "$1 – "); // "Sword 1 Shortsword" -> "Sword 1 – Shortsword"
+    return n.replace(/\b(\d+) (?=[A-Za-z])/, "$1 – "); // "Sword 1 Shortsword" -> "Sword 1 – Shortsword"
   }
 
   // Deep-link anchor for a card, e.g. "Pine Tree" -> "pine-tree". Auto-derived from the
