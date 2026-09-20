@@ -4,7 +4,7 @@ CC0Tree is a static asset library and a small, purely client-side website (no ba
 
 ## What to report
 
-- A security issue with the website itself (e.g. something in `index.html`, the GitHub Actions workflow, or how the site pulls data from the GitHub API)
+- A security issue with the website itself (e.g. something in `index.html` or `gallery.html`, or how the site pulls data from the GitHub API)
 - A file in the repo that appears malicious, tampered with, or not what it claims to be
 - Any supply-chain concern with something this project depends on
 

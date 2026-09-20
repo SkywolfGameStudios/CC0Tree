@@ -15,7 +15,7 @@ This GitHub repo exists so you can download the entire library at once, clone it
 ## ✨ What's Inside
 
 - Low‑poly 3D models
-- Pixel‑friendly textures
+- Simple gradient textures you can swap, recolor, or remap
 - Props, environment pieces, and world‑building assets
 - Game‑ready, lightweight assets optimized for performance
 - New additions added regularly as the CC0Tree "forest" grows
@@ -57,7 +57,7 @@ You can access CC0Tree in several ways:
 3. **Browse on itch.io** — Assets are also viewable individually on [itch.io](https://skywolfgamestudios.itch.io/cc0tree).
 4. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
 
-A pre-packaged zip of every FBX, plus the original Blender source files, are available as [Patreon supporter perks](https://patreon.com/skywolfgamestudios) for anyone who'd rather not download assets one by one.
+The original Blender source files and a pre-packaged zip of every FBX are available as [Patreon supporter perks](https://patreon.com/skywolfgamestudios) for anyone who'd rather not download assets one by one. Supporters can also request a model — see [Request a Model](https://skywolfgamestudios.github.io/CC0Tree/#request) on the website.
 
 ## 🌱 Project Goal
 
@@ -67,10 +67,14 @@ The mission is simple: grow a massive, community‑friendly forest of free game 
 
 ## 🔗 Follow & Support
 
-Stay updated on new asset drops, dev logs, and project growth:
+Stay updated on new asset drops, [devlogs](https://skywolfgamestudios.github.io/CC0Tree/#devlog), and project growth:
 
 - Patreon: https://patreon.com/skywolfgamestudios
+- GitHub Sponsors: https://github.com/sponsors/SkywolfGameStudios
+- Ko-fi: https://ko-fi.com/skywolfgamestudios
+- itch.io: https://skywolfgamestudios.itch.io/cc0tree
 - Gumroad: https://skywolfgamestudios.gumroad.com/l/cc0tree
+- Discord: https://discord.gg/wp46sDj3dY
 - X (Twitter): https://x.com/skywolfgamestds
 - Bluesky: https://bsky.app/profile/skywolfgamestudios.bsky.social
 
