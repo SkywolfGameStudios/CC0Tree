@@ -99,6 +99,14 @@
 </div>
 
 <p class="foot-note">Want filters, categories, and file details instead? <a href="index.html#library">Browse the Library</a>.</p>
+<p class="foot-note">Enjoying CC0Tree? Help keep new models coming:
+  <a href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Patreon</a> ·
+  <a href="https://github.com/sponsors/SkywolfGameStudios" target="_blank" rel="noopener">GitHub Sponsors</a> ·
+  <a href="https://ko-fi.com/skywolfgamestudios" target="_blank" rel="noopener">Ko-fi</a> ·
+  <a href="https://skywolfgamestudios.itch.io/cc0tree" target="_blank" rel="noopener">itch.io</a> ·
+  <a href="https://skywolfgamestudios.gumroad.com/l/cc0tree" target="_blank" rel="noopener">Gumroad</a> ·
+  <a href="https://discord.gg/wp46sDj3dY" target="_blank" rel="noopener">Discord</a>
+  — supporters can also <a href="index.html#request">request a model</a>.</p>
 
 <script>
 (function(){
@@ -125,6 +133,12 @@
       .split(/[_\s-]+/)
       .map(t => t.toLowerCase())
       .filter(t => t && !NOISE_TOKENS.has(t));
+  }
+
+  // Small resized copy of a render via the free wsrv.nl image cache (cards only need ~300px,
+  // the originals are 1024px / 300-700 KB each). Falls back to the original file if it's down.
+  function thumbUrl(url, w){
+    return "https://wsrv.nl/?url=" + encodeURIComponent(url) + "&w=" + w + "&h=" + w + "&fit=contain&output=webp&q=82";
   }
 
   function prettyName(filename){
@@ -169,7 +183,7 @@
         const matches = items.filter(i => !query || i.name.toLowerCase().includes(query));
         gallery.innerHTML = !matches.length ? `<p class="no-results">No models match your search.</p>` : matches.map(i => `
         <a class="tile" href="${i.download}" download title="Download ${i.name}">
-          <img src="${i.thumb}" alt="${i.name}" loading="lazy">
+          <img src="${thumbUrl(i.thumb, 600)}" alt="${i.name}" loading="lazy" onerror="if(this.src!=='${i.thumb}'){this.src='${i.thumb}'}">
           <span class="dl-hint">⬇ Download</span>
           <span class="label">${i.name}</span>
         </a>

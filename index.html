@@ -436,7 +436,7 @@
         <div class="support-card">
           <div class="icon">☕</div>
           <h3>Patreon</h3>
-          <p>Fuel weekly releases and unlock Blender source files, early access, and supporter perks.</p>
+          <p>Fuel weekly releases and unlock the Blender source files, the full FBX zip, and model requests.</p>
           <a class="btn btn-gold" href="https://patreon.com/skywolfgamestudios" target="_blank" rel="noopener">Support on Patreon</a>
         </div>
         <div class="support-card">
@@ -677,6 +677,12 @@
     }
   }
 
+  // Small resized copy of a render via the free wsrv.nl image cache (cards only need ~150px,
+  // the originals are 1024px / 300-700 KB each). Falls back to the original file if it's down.
+  function thumbUrl(url, w){
+    return "https://wsrv.nl/?url=" + encodeURIComponent(url) + "&w=" + w + "&h=" + w + "&fit=contain&output=webp&q=82";
+  }
+
   function formatBytes(bytes){
     if (!bytes && bytes !== 0) return "";
     if (bytes < 1024) return bytes + " B";
@@ -749,7 +755,7 @@
             ${i.isNew ? '<span class="new-badge">✨ NEW</span>' : ''}
             ${i.isUpdated ? '<span class="updated-badge">🔄 UPDATED</span>' : ''}
             <div class="icon">${i.thumb
-              ? `<img src="${i.thumb}" alt="" class="zoomable" data-name="${i.name.replace(/"/g,'&quot;')}" onerror="this.parentElement.textContent='${i.icon}';">`
+              ? `<img src="${thumbUrl(i.thumb, 200)}" data-full="${i.thumb}" alt="" class="zoomable" data-name="${i.name.replace(/"/g,'&quot;')}" onerror="if(this.src!==this.dataset.full){this.src=this.dataset.full}else{this.parentElement.textContent='${i.icon}'}">`
               : i.icon}</div>
             <h3>${i.name}</h3>
             <div class="meta">
@@ -907,7 +913,7 @@
 
   document.body.addEventListener("click", (e) => {
     const img = e.target.closest(".icon img.zoomable");
-    if (img){ open(img.src, img.dataset.name); return; }
+    if (img){ open(img.dataset.full || img.src, img.dataset.name); return; }
     if (e.target.closest("#lb-close") || e.target === lb){ close(); }
   });
   document.addEventListener("keydown", (e) => {
