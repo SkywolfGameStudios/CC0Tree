@@ -18,7 +18,7 @@ This GitHub repo exists so you can download the entire library at once, clone it
 - Simple gradient textures you can swap, recolor, or remap
 - Props, environment pieces, and world‑building assets
 - Game‑ready, lightweight assets optimized for performance
-- New additions added regularly as the CC0Tree "forest" grows
+- New models added regularly as the CC0Tree "forest" grows
 
 Most assets are designed to be lightweight and easy to use, typically staying within a low‑poly range suitable for mobile and indie projects. Some assets may become more detailed over time as the library expands, but the overall style will remain clean, stylized, and performance‑friendly.
 
@@ -27,7 +27,7 @@ Most assets are designed to be lightweight and easy to use, typically staying wi
 To keep CC0Tree fully accessible:
 
 - **FBX files** are included here in the public CC0 release. These are game‑ready and free for anyone to use.
-- **Blender source files (.blend)** are available as a supporter perk on [Patreon](https://patreon.com/skywolfgamestudios). Supporting the project helps me keep CC0Tree growing with new assets every week.
+- **Blender source files (.blend)** are available as a supporter perk on [Patreon](https://patreon.com/skywolfgamestudios) and [itch.io](https://skywolfgamestudios.itch.io/cc0tree). Supporting the project helps me keep CC0Tree growing with new assets every week.
 
 This setup keeps the CC0 assets truly free while giving supporters something extra for helping the project grow.
 
@@ -57,7 +57,7 @@ You can access CC0Tree in several ways:
 3. **Browse on itch.io** — Assets are also viewable individually on [itch.io](https://skywolfgamestudios.itch.io/cc0tree).
 4. **Contribute** — Contributions are welcome! If you'd like to add your own CC0 assets to the project, feel free to open a pull request.
 
-The original Blender source files and a pre-packaged zip of every FBX are available as [Patreon supporter perks](https://patreon.com/skywolfgamestudios) for anyone who'd rather not download assets one by one. Supporters can also request a model — see [Request a Model](https://skywolfgamestudios.github.io/CC0Tree/#request) on the website.
+The original Blender source files and a pre-packaged zip of every FBX are available as supporter perks on [Patreon](https://patreon.com/skywolfgamestudios) and [itch.io](https://skywolfgamestudios.itch.io/cc0tree) for anyone who'd rather not download assets one by one. Supporters can also request a model — see [Request a Model](https://skywolfgamestudios.github.io/CC0Tree/#request) on the website.
 
 ## 🌱 Project Goal
 
