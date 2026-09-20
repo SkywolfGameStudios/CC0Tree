@@ -290,6 +290,17 @@
   }
   @media (max-width:480px){.support-toast{left:12px; right:12px; bottom:12px;}}
 
+  /* BACK TO TOP */
+  .to-top{
+    position:fixed; right:20px; bottom:20px; z-index:90; width:46px; height:46px; border-radius:50%;
+    background:var(--accent); color:#062012; border:none; font-size:1.3rem; font-weight:800; cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(12px); pointer-events:none; transition:opacity .2s, transform .2s, background .15s;
+  }
+  .to-top.show{opacity:1; transform:none; pointer-events:auto;}
+  .to-top:hover{background:var(--accent-bright);}
+  @media (max-width:480px){.to-top{right:14px; bottom:14px;}}
+
   .load-state{text-align:center; color:var(--text-dim); padding:40px 0; font-size:0.95rem;}
 
   /* SCHEDULE */
@@ -965,6 +976,17 @@
   document.getElementById("toast-patreon").addEventListener("click", hideToast);
 })();
 </script>
+
+<script>
+(function(){
+  const btn = document.getElementById("to-top");
+  const toggle = () => btn.classList.toggle("show", window.scrollY > 600);
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+})();
+</script>
+<button class="to-top" id="to-top" aria-label="Back to top" title="Back to top">↑</button>
 
 </body>
 </html>
