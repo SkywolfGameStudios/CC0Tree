@@ -26,7 +26,7 @@ That's it — no code changes, ever.
 - Electronics — Computer Tower, Flashlight
 - Explosives — Hand Bomb
 - Garden — Watering Can
-- Misc — Abstract Zeus Sculpture, Red Pen, Trash Can
+- Misc — Abstract Zeus Sculpture, Jerry Can, Red Pen, Trash Can
 - Nature — Dead Pine Tree, Pine Tree, Tree Rounded
 - Sports — Baseball Bat, Bowling Ball, Bowling Pin
 - Tools — Crowbar, Hammer Claw, Screwdriver, Wrench
