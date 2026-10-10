@@ -24,7 +24,7 @@ That's it — no code changes, ever.
 ## Current categories (as of this writing)
 
 - Electronics — Computer Tower, Flashlight
-- Explosives — Hand Bomb
+- Explosives — Grenade (Pineapple), Hand Bomb
 - Garden — Watering Can
 - Misc — Abstract Zeus Sculpture, Jerry Can, Red Pen, Trash Can
 - Nature — Dead Pine Tree, Pine Tree, Tree Rounded
