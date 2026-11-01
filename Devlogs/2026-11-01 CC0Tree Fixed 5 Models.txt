@@ -1,7 +1,5 @@
-Model fixes: I found that a few FBX files had export problems, and they're now fixed.
+Five FBX files had export problems and are now fixed. If you downloaded any of them before today, please grab them again. Sorry about that, it was my export mistake.
 
-- Oil Barrel: the FBX was empty, with no model inside it.
-- Airplane, Hammer Claw, and Trash Can: the FBX files weren't linked to their textures, so they came into engines like Godot as plain white. They now link to their textures correctly.
-- Medkit: some faces on the front of the cross were facing the wrong way, so the cross disappeared in engines like Godot. It now shows correctly.
-
-That was my export mistake. If you downloaded any of these before today, please grab them again. Sorry about that.
+- Oil Barrel: the file was empty.
+- Airplane, Hammer Claw, Trash Can: no texture link, so they imported as plain white.
+- Medkit: some faces on the cross faced the wrong way, so the cross disappeared in engines like Godot.
