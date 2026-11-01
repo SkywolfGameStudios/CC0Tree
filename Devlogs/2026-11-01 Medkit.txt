@@ -3,3 +3,5 @@ This week's free drop is a Medkit, and you can grab it right now. It's low-poly,
 It's a classic first aid kit, a staple health pickup for shooters, survival and adventure prototypes, and it pairs nicely with the Wooden Box and Oil Barrel already in the library.
 
 Grab it here: https://skywolfgamestudios.github.io/CC0Tree/#medkit
+
+If CC0Tree saves you time, supporters get the Blender source files, the full FBX zip, and model requests: https://patreon.com/skywolfgamestudios
