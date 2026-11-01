@@ -74,6 +74,7 @@ Stay updated on new asset drops, [devlogs](https://skywolfgamestudios.github.io/
 - Ko-fi: https://ko-fi.com/skywolfgamestudios
 - itch.io: https://skywolfgamestudios.itch.io/cc0tree
 - Gumroad: https://skywolfgamestudios.gumroad.com/l/cc0tree
+- PayPal: https://www.paypal.biz/SkyWolfGames
 - Discord: https://discord.gg/wp46sDj3dY
 - X (Twitter): https://x.com/skywolfgamestds
 - Bluesky: https://bsky.app/profile/skywolfgamestudios.bsky.social
