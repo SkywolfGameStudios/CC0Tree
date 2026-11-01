@@ -1,0 +1,3 @@
+Oil Barrel update: the FBX for last week's Oil Barrel was discovered to be empty, with no model inside it. That was my export mistake, and it's now fixed. If you downloaded the Oil Barrel before today, please grab it again. Sorry about that.
+
+Grab it here: https://skywolfgamestudios.github.io/CC0Tree/#oil-barrel
