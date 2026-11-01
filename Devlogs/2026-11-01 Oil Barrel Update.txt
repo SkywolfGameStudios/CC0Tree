@@ -1,3 +1,8 @@
-Oil Barrel update: the FBX for last week's Oil Barrel was discovered to be empty, with no model inside it. That was my export mistake, and it's now fixed. If you downloaded the Oil Barrel before today, please grab it again. Sorry about that.
+Model fixes: I found that a few FBX files had export problems, and they're now fixed.
 
-Grab it here: https://skywolfgamestudios.github.io/CC0Tree/#oil-barrel
+- Oil Barrel: the FBX was empty, with no model inside it.
+- Airplane, Hammer Claw, and Trash Can: the FBX files weren't linked to their textures, so they came into engines like Godot as plain white. They now link to their textures correctly.
+
+That was my export mistake. If you downloaded any of these before today, please grab them again. Sorry about that.
+
+Oil Barrel: https://skywolfgamestudios.github.io/CC0Tree/#oil-barrel
