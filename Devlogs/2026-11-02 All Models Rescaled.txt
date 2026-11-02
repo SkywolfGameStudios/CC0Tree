@@ -1,0 +1,7 @@
+Every CC0Tree model now uses real-world scale. I found that the sizes were inconsistent (a pen was 20 units long while a medkit was 3), so objects looked wrong side by side in a game engine. All 28 models are now fixed.
+
+- 1 unit = 1 meter. A pen is 15 cm, a crate 60 cm, a katana 1 m, a pine tree 6 m.
+- The origin is at the center of the base and every model sits on the ground, so it drops into a scene without any adjusting.
+- Object scale is 1, with no hidden scaling.
+
+Your imports will look different from before: most models are smaller and a few are larger. If you downloaded any models earlier, please re-download them.
