@@ -28,7 +28,7 @@ That's it — no code changes, ever.
 - Garden — Watering Can
 - Misc — Abstract Zeus Sculpture, Jerry Can, Oil Barrel, Red Pen, Trash Can, Wooden Box
 - Nature — Dead Pine Tree, Pine Tree, Tree Rounded
-- Pickup — Medkit
+- Pickup — Ammo Box, Bullet, Medkit
 - Sports — Baseball Bat, Bowling Ball, Bowling Pin
 - Tools — Crowbar, Hammer Claw, Screwdriver, Wrench
 - Vehicles — Airplane
