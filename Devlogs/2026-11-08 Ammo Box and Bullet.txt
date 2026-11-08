@@ -2,7 +2,7 @@ Two new free models this week: an Ammo Box and a Bullet. Both are low-poly, game
 
 They are real-world scale like the rest of the library: the box is 30 cm wide and the bullet is 12 cm tall, so they sit right next to the Medkit in the Pickup category. Health and ammo pickups are ready to drop in.
 
-Bonus: CC0Tree is now on the Godot Asset Store. It installs as an addon with a turntable viewer, a grid of every model, and all of them at real-world scale: https://store.godotengine.org/asset/skywolfgamestudios/cc0tree/
+Big news: CC0Tree has launched on the Godot Asset Store! It installs as an addon with a turntable viewer, a grid of every model, and all of them at real-world scale, ready to use in your Godot project: https://store.godotengine.org/asset/skywolfgamestudios/cc0tree/
 
 Also updated: the Patreon supporter pack now has all 30 models as FBX with textures, plus the original Blender source files: https://patreon.com/skywolfgamestudios
 
